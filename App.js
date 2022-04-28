@@ -4,7 +4,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import useRealm from './functions/useRealm';
 import useMLkit from './functions/useMLkit';
-import {Searchbar, Button, FAB} from 'react-native-paper';
+import {Searchbar, Button} from 'react-native-paper';
+import GetLocation from 'react-native-get-location';
 
 const accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -16,6 +17,20 @@ const App = () => {
 
   const {places, createplace} = useRealm();
   const {reconizeFromCamera, recognizeFromPicker} = useMLkit();
+
+  useEffect(() => {
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+    })
+      .then(location => {
+        console.log(location);
+      })
+      .catch(error => {
+        const {code, message} = error;
+        console.warn(code, message);
+      });
+  }, []);
 
   return (
     <SafeAreaProvider style={styles.page}>
@@ -37,7 +52,7 @@ const App = () => {
         opacity={0.6}
         mode="contained"
         color="black"
-        onPress={() => recognizeFromPicker(setTextArray)}
+        // onPress={() => recognizeFromPicker(setTextArray)}
         style={{
           position: 'absolute',
           top: 35,
