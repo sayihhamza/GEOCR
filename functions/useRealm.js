@@ -41,7 +41,6 @@ const useRealm = () => {
     Realm.open(config)
       .then(realmInstance => {
         realmReference.current = realmInstance;
-        console.log(realmInstance);
         const realm = realmReference.current;
         if (realm) {
           setPlaces(realm.objects('Place'));
