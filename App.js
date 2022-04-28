@@ -4,7 +4,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import useRealm from './functions/useRealm';
 import useMLkit from './functions/useMLkit';
-import {Button} from 'react-native-paper';
+import {Searchbar, Button, FAB} from 'react-native-paper';
 
 const accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -34,8 +34,7 @@ const App = () => {
         />
       </MapboxGL.MapView>
       <Button
-        opacity={0.8}
-        icon="camera"
+        opacity={0.6}
         mode="contained"
         color="black"
         onPress={() => recognizeFromPicker(setTextArray)}
@@ -45,8 +44,31 @@ const App = () => {
           width: 350,
           borderRadius: 50,
         }}>
-        Pick from gallery
+        Add place to map
       </Button>
+      <Searchbar
+        placeholder="Search for place in map"
+        // onChangeText={onChangeSearch}
+        // value={searchQuery}
+        iconColor="white"
+        theme={{
+          dark: true,
+          colors: {
+            primary: 'white',
+            text: 'white',
+            placeholder: 'white',
+          },
+          roundness: 50,
+        }}
+        style={{
+          position: 'absolute',
+          top: 80,
+          width: 350,
+          height: 42,
+          backgroundColor: 'black',
+          opacity: 0.6,
+        }}
+      />
     </SafeAreaProvider>
   );
 };
