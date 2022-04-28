@@ -6,6 +6,7 @@ import useRealm from './functions/useRealm';
 import useMLkit from './functions/useMLkit';
 import {Searchbar, Button} from 'react-native-paper';
 import GetLocation from 'react-native-get-location';
+import Geocoder from '@timwangdev/react-native-geocoder';
 
 const accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -30,6 +31,16 @@ const App = () => {
         const {code, message} = error;
         console.warn(code, message);
       });
+    (async () => {
+      let loc = await Geocoder.geocodeAddress(
+        '117 Avenue Mohammed Bahnini، Fes 30050',
+        {
+          locale: 'fr',
+          maxResults: 10,
+        },
+      );
+      console.log(loc);
+    })();
   }, []);
 
   return (
