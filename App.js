@@ -25,23 +25,20 @@ const App = () => {
       timeout: 15000,
     })
       .then(location => {
-        console.log(location);
+        // console.log(location);
       })
       .catch(error => {
         const {code, message} = error;
         console.warn(code, message);
       });
     (async () => {
-      let loc = await Geocoder.geocodeAddress(
-        '117 Avenue Mohammed Bahnini، Fes 30050',
-        {
-          locale: 'fr',
-          maxResults: 10,
-        },
-      );
+      let loc = await Geocoder.geocodeAddress(textArray.join(), {
+        locale: 'fr',
+        maxResults: 10,
+      });
       console.log(loc);
     })();
-  }, []);
+  }, [textArray]);
 
   return (
     <SafeAreaProvider style={styles.page}>
@@ -55,7 +52,7 @@ const App = () => {
 
         <MapboxGL.Camera
           centerCoordinate={[-5.016864, 34.021562]}
-          zoomLevel={14}
+          // zoomLevel={14}
           animationMode="flyTo"
         />
       </MapboxGL.MapView>
@@ -63,7 +60,7 @@ const App = () => {
         opacity={0.6}
         mode="contained"
         color="black"
-        // onPress={() => recognizeFromPicker(setTextArray)}
+        onPress={() => recognizeFromPicker(setTextArray)}
         style={{
           position: 'absolute',
           top: 35,
