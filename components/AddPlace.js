@@ -8,15 +8,9 @@ import useRealm from "../functions/useRealm";
 import GetLocation from "react-native-get-location";
 import Geocoder from "@timwangdev/react-native-geocoder";
 
-// import styles from "../stylesheet";
-
-// The AddTask is a button for adding tasks. When the button is pressed, an
-// overlay shows up to request user input for the new task name. When the
-// "Create" button on the overlay is pressed, the overlay closes and the new
-// task is created in the realm.
-export function AddPlace({ createPlace }) {
+export function AddPlace() {
   const [placeName, setPlaceName] = useState("");
-  const [placeType, setPlaceType] = useState("");
+  const [placeType, setPlaceType] = useState("Store");
   const [placeLocation, setPlaceLocation] = useState([]);
   const [placeAddress, setPlaceAddress] = useState("");
   const [placePhone, setPlacePhone] = useState("");
@@ -27,22 +21,36 @@ export function AddPlace({ createPlace }) {
   const [scannedAddress, setScannedAddress] = useState(null);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
   const [textArray, setTextArray] = useState(null);
   const { recognizeFromCamera, recognizeFromPicker } = useMLkit();
-  const { places, createplace } = useRealm();
+  const { createplace } = useRealm();
 
   useEffect(() => {
-    // Get current Location
+    (async () => {
+      textArray[0] ? setPlaceName(textArray[0]) : null;
+      scannedLocation
+        ? setPlaceLocation(scannedLocation)
+        : setPlaceLocation(currentLocation);
+      scannedAddress ? setPlaceAddress(scannedAddress) : null;
+    })();
+  }, [textArray]);
+
+  useEffect(() => {
+    // Testing
+    console.log(`Name : ${placeName}`);
+    console.log(`Location : ${placeLocation}`);
+    console.log(`Address : ${placeAddress}`);
+    console.log(`Email : ${placeEmail}`);
+    console.log(`Phone : ${placePhone}`);
+    console.log(`Website : ${placeWebsite}`);
+    console.log(`Type : ${placeType}`);
+    // Get location
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,
     })
       .then((location) => {
         setCurrentLocation([location.longitude, location.latitude]);
-        // console.log(`Hadi hiya : ${currentLocation}`);
-        // console.log(location);
-        // console.log(`[${location.latitude},${location.longitude}]`);
       })
       .catch((error) => {
         const { code, message } = error;
@@ -53,18 +61,17 @@ export function AddPlace({ createPlace }) {
       let loc = await Geocoder.geocodeAddress(textArray.join());
       let position = [];
       loc.map((block) => {
-        // console.log(`[${block.position.lat},${block.position.lng}]`);
         setScannedLocation([block.position.lat, block.position.lng]);
-        console.log(`Hada li scanni ${scannedLocation}`);
-        // console.log(block.formattedAddress);
-        position = { lat: block.position.lat, lng: block.position.lng };
       });
       // Use reverse geocoder
-      let test = await Geocoder.geocodePosition(position);
-      console.log(test);
-      // console.log(loc);
+      position = { lat: placeLocation[0], lng: placeLocation[1] };
+      let addressData = await Geocoder.geocodePosition(position);
+      Object.entries(addressData)[0].map((block) => {
+        console.log(block.formattedAddress);
+        setScannedAddress(block.formattedAddress);
+      });
     })();
-  }, [textArray]);
+  }, [textArray, placeLocation]);
 
   return (
     <>
@@ -95,8 +102,10 @@ export function AddPlace({ createPlace }) {
               mode="contained"
               color="black"
               onPress={() => {
-                setMoreInfo(false);
-                recognizeFromCamera(setTextArray);
+                (async () => {
+                  await recognizeFromCamera(setTextArray);
+                  setMoreInfo(false);
+                })();
               }}
               style={{
                 width: 350,
@@ -110,8 +119,10 @@ export function AddPlace({ createPlace }) {
               mode="contained"
               color="black"
               onPress={() => {
-                setMoreInfo(false);
-                recognizeFromPicker(setTextArray);
+                (async () => {
+                  await recognizeFromPicker(setTextArray);
+                  setMoreInfo(false);
+                })();
               }}
               style={{
                 width: 350,
@@ -137,16 +148,16 @@ export function AddPlace({ createPlace }) {
                 autoFocus={true}
               />
               <Picker
-                selectedValue={selectedValue}
+                selectedValue={placeType}
                 style={{
                   height: 50,
                   width: 170,
                 }}
-                onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                onValueChange={(itemValue) => setPlaceType(itemValue)}
               >
-                <Picker.Item label="Store" value="store" />
-                <Picker.Item label="Cafe" value="cafe" />
-                <Picker.Item label="Restaurant" value="restaurant" />
+                <Picker.Item label="Store" value="Store" />
+                <Picker.Item label="Cafe" value="Cafe" />
+                <Picker.Item label="Restaurant" value="Restaurant" />
               </Picker>
             </View>
             {!moreInfo ? (
@@ -200,7 +211,17 @@ export function AddPlace({ createPlace }) {
               <Button
                 mode="contained"
                 color="black"
-                onPress={() => setTextArray(null)}
+                onPress={() =>
+                  createplace(
+                    placeName,
+                    placeLocation,
+                    placeAddress,
+                    placeType,
+                    placePhone,
+                    placeEmail,
+                    placeWebsite
+                  )
+                }
                 style={{
                   width: 170,
                   borderRadius: 50,
