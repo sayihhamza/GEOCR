@@ -7,6 +7,7 @@ import useMLkit from './functions/useMLkit';
 import {Searchbar, Button} from 'react-native-paper';
 import GetLocation from 'react-native-get-location';
 import Geocoder from '@timwangdev/react-native-geocoder';
+import {AddPlace} from './components/AddPlace';
 
 const accessToken =
   'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
@@ -15,6 +16,7 @@ MapboxGL.setConnected(true);
 
 const App = () => {
   const [textArray, setTextArray] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState([0, 0]);
 
   const {places, createplace} = useRealm();
   const {reconizeFromCamera, recognizeFromPicker} = useMLkit();
@@ -25,7 +27,8 @@ const App = () => {
       timeout: 15000,
     })
       .then(location => {
-        // console.log(location);
+        setCurrentPosition([location.longitude, location.latitude]);
+        console.log(location);
       })
       .catch(error => {
         const {code, message} = error;
@@ -51,16 +54,16 @@ const App = () => {
         <MapboxGL.UserLocation />
 
         <MapboxGL.Camera
-          centerCoordinate={[-5.016864, 34.021562]}
-          // zoomLevel={14}
+          centerCoordinate={currentPosition}
+          zoomLevel={14}
           animationMode="flyTo"
         />
       </MapboxGL.MapView>
       <Button
-        opacity={0.6}
+        // opacity={0.6}
         mode="contained"
         color="black"
-        onPress={() => recognizeFromPicker(setTextArray)}
+        onPress={() => reconizeFromCamera(setTextArray)}
         style={{
           position: 'absolute',
           top: 35,
@@ -89,9 +92,10 @@ const App = () => {
           width: 350,
           height: 42,
           backgroundColor: 'black',
-          opacity: 0.6,
+          // opacity: 0.6,
         }}
       />
+      <AddPlace />
     </SafeAreaProvider>
   );
 };
