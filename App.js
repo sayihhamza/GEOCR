@@ -6,7 +6,6 @@ import useRealm from "./functions/useRealm";
 import useMLkit from "./functions/useMLkit";
 import { Searchbar } from "react-native-paper";
 import GetLocation from "react-native-get-location";
-import Geocoder from "@timwangdev/react-native-geocoder";
 import { AddPlace } from "./components/AddPlace";
 
 const accessToken =
@@ -50,13 +49,14 @@ const App = () => {
         <MapboxGL.UserLocation />
 
         <MapboxGL.Camera
+          style={{ marginTop: 12 }}
           centerCoordinate={currentPosition}
           zoomLevel={14}
           animationMode="flyTo"
         />
       </MapboxGL.MapView>
       <Searchbar
-        placeholder="Search for place in map"
+        placeholder="Search place"
         // onChangeText={onChangeSearch}
         // value={searchQuery}
         iconColor="white"

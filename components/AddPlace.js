@@ -7,6 +7,7 @@ import useMLkit from "../functions/useMLkit";
 import useRealm from "../functions/useRealm";
 import GetLocation from "react-native-get-location";
 import Geocoder from "@timwangdev/react-native-geocoder";
+import gallery from "../assets/gallery.png";
 
 export function AddPlace() {
   const [placeName, setPlaceName] = useState("");
@@ -21,6 +22,7 @@ export function AddPlace() {
   const [scannedAddress, setScannedAddress] = useState(null);
   const [overlayVisible, setOverlayVisible] = useState(false);
   const [moreInfo, setMoreInfo] = useState(false);
+  const [cameraOption, setCameraOption] = useState(true);
   const [textArray, setTextArray] = useState(null);
   const { recognizeFromCamera, recognizeFromPicker } = useMLkit();
   const { createplace } = useRealm();
@@ -88,50 +90,111 @@ export function AddPlace() {
       >
         {!textArray ? (
           <>
-            <Text
-              style={{
-                color: "white",
-                fontSize: 16,
-                marginBottom: 10,
-                textAlign: "center",
-              }}
-            >
-              Choose a picture of place panel or its card
-            </Text>
-            <Button
-              mode="contained"
-              color="black"
-              onPress={() => {
-                (async () => {
-                  await recognizeFromCamera(setTextArray);
-                  setMoreInfo(false);
-                })();
-              }}
-              style={{
-                width: 350,
-                borderRadius: 50,
-                margin: 4,
-              }}
-            >
-              Pick from Camera
-            </Button>
-            <Button
-              mode="contained"
-              color="black"
-              onPress={() => {
-                (async () => {
-                  await recognizeFromPicker(setTextArray);
-                  setMoreInfo(false);
-                })();
-              }}
-              style={{
-                width: 350,
-                borderRadius: 50,
-                margin: 4,
-              }}
-            >
-              Pick from gallery
-            </Button>
+            {cameraOption ? (
+              <>
+                <Button
+                  mode="contained"
+                  color="#1F1F1F"
+                  icon="camera"
+                  onPress={() => {
+                    (async () => {
+                      await recognizeFromCamera(setTextArray);
+                      setMoreInfo(false);
+                    })();
+                  }}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  Card picture
+                </Button>
+                <Button
+                  mode="contained"
+                  color="#1F1F1F"
+                  icon="camera"
+                  onPress={() => {
+                    (async () => {
+                      await recognizeFromCamera(setTextArray);
+                      setMoreInfo(false);
+                    })();
+                  }}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  Panel picture
+                </Button>
+                <Button
+                  color="black"
+                  onPress={() => setCameraOption(false)}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 10 }}>
+                    want to open gallery ?
+                  </Text>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  mode="contained"
+                  color="#1F1F1F"
+                  icon={gallery}
+                  onPress={() => {
+                    (async () => {
+                      await recognizeFromPicker(setTextArray);
+                      setMoreInfo(false);
+                    })();
+                  }}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  Card picture
+                </Button>
+                <Button
+                  mode="contained"
+                  color="#1F1F1F"
+                  icon={gallery}
+                  onPress={() => {
+                    (async () => {
+                      await recognizeFromPicker(setTextArray);
+                      setMoreInfo(false);
+                    })();
+                  }}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  Panel picture
+                </Button>
+                <Button
+                  color="black"
+                  onPress={() => setCameraOption(true)}
+                  style={{
+                    width: 350,
+                    borderRadius: 50,
+                    margin: 4,
+                  }}
+                >
+                  <Text style={{ color: "white", fontSize: 10 }}>
+                    want to open camera ?
+                  </Text>
+                </Button>
+              </>
+            )}
           </>
         ) : (
           <>
@@ -260,7 +323,7 @@ export function AddPlace() {
           borderRadius: 50,
         }}
       >
-        Add place to map
+        Add place
       </Button>
     </>
   );
