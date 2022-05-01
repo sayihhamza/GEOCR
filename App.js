@@ -42,7 +42,7 @@ const App = () => {
       <StatusBar translucent backgroundColor="transparent" />
       {textArray ? textArray.map((text) => console.log(text)) : null}
       <MapboxGL.MapView
-        // styleURL={'mapbox://styles/mapbox/streets-v11'}
+        // styleURL={"mapbox://styles/mapbox/streets-v11"}
         styleURL={"mapbox://styles/mapbox/dark-v10"}
         style={styles.map}
       >

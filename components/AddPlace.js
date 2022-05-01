@@ -13,7 +13,7 @@ export function AddPlace() {
   const [placeName, setPlaceName] = useState("");
   const [placeType, setPlaceType] = useState("Store");
   const [placeLocation, setPlaceLocation] = useState([]);
-  const [placeAddress, setPlaceAddress] = useState("");
+  const [placeAddress, setPlaceAddress] = useState("no address");
   const [placePhone, setPlacePhone] = useState("");
   const [placeEmail, setPlaceEmail] = useState("");
   const [placeWebsite, setPlaceWebsite] = useState("");
@@ -27,15 +27,54 @@ export function AddPlace() {
   const { recognizeFromCamera, recognizeFromPicker } = useMLkit();
   const { createplace } = useRealm();
 
+  const getPhone = (text) => {
+    return text.match(/[\+]?\d{12}|\d{10}|\(\d{3}\)\s?-\d{6}/gi)[0];
+  };
+
+  const getWebsite = (text) => {
+    return text.match(
+      /((www)\.)[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/gi
+    )[0];
+  };
+
+  const getEmail = (text) => {
+    return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi)[0];
+  };
+
   useEffect(() => {
+    // textArray !== [] ? textArray.map((text) => console.log(text)) : null;
     (async () => {
-      textArray[0] ? setPlaceName(textArray[0]) : null;
+      textArray !== [] ? setPlaceName(textArray[0]) : null;
+      // textArray !== []
+      //   ? textArray.map((text) => {
+      //       console.log(text);
+      //       getPhone(text) ? setPlacePhone(getPhone(text)) : null;
+      //     })
+      //   : null;
+      textArray !== [] ? setPlacePhone(getPhone(textArray.join("\n"))) : null;
+      textArray !== [] ? setPlaceEmail(getEmail(textArray.join("\n"))) : null;
+      textArray !== []
+        ? setPlaceWebsite(getWebsite(textArray.join("\n")))
+        : null;
+      currentLocation !== [] ? setPlaceLocation(currentLocation) : null;
+      scannedAddress
+        ? setPlaceAddress(scannedAddress)
+        : setPlaceAddress("no address");
       scannedLocation
         ? setPlaceLocation(scannedLocation)
         : setPlaceLocation(currentLocation);
-      scannedAddress ? setPlaceAddress(scannedAddress) : null;
     })();
-  }, [textArray]);
+  }, [
+    textArray,
+    moreInfo,
+    placeName,
+    placeType,
+    placeLocation,
+    placeAddress,
+    placeEmail,
+    placePhone,
+    placeWebsite,
+  ]);
 
   useEffect(() => {
     // Testing
@@ -66,7 +105,9 @@ export function AddPlace() {
         setScannedLocation([block.position.lat, block.position.lng]);
       });
       // Use reverse geocoder
-      position = { lat: placeLocation[0], lng: placeLocation[1] };
+      placeLocation
+        ? (position = { lat: placeLocation[0], lng: placeLocation[1] })
+        : (position = { lat: currentLocation[0], lng: currentLocation[1] });
       let addressData = await Geocoder.geocodePosition(position);
       Object.entries(addressData)[0].map((block) => {
         console.log(block.formattedAddress);
@@ -243,6 +284,7 @@ export function AddPlace() {
               <>
                 <Input
                   onChangeText={setPlacePhone}
+                  defaultValue={placePhone ? placePhone : null}
                   placeholder="Phone "
                   containerStyle={{ width: 350 }}
                   style={{
@@ -252,6 +294,7 @@ export function AddPlace() {
                 />
                 <Input
                   onChangeText={setPlaceEmail}
+                  defaultValue={placeEmail ? placeEmail : null}
                   placeholder="Email"
                   containerStyle={{ width: 350 }}
                   style={{
@@ -261,6 +304,7 @@ export function AddPlace() {
                 />
                 <Input
                   onChangeText={setPlaceWebsite}
+                  defaultValue={placeWebsite ? placeWebsite : null}
                   placeholder="Website"
                   containerStyle={{ width: 350 }}
                   style={{
