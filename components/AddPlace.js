@@ -43,7 +43,8 @@ export function AddPlace() {
 
   useEffect(() => {
     (async () => {
-      if (!scannedAddress) {
+      if (!scannedLocation) {
+        console.log(`WAA ZAB IF`);
         let addr = await Geocoder.geocodePosition({
           lat: currentLocation[1],
           lng: currentLocation[0],
@@ -55,18 +56,19 @@ export function AddPlace() {
             : null
         );
       } else {
-        console.log(`Place location :`, placeLocation);
+        console.log(`WAA ZAB ELSE`);
+        console.log(`Scanned address :`, scannedAddress);
         let addr = await Geocoder.geocodePosition({
-          lat: placeLocation[1],
-          lng: placeLocation[0],
+          lat: placeLocation[0],
+          lng: placeLocation[1],
         });
         Object.entries(addr)[0].map((block) =>
-          block.formattedAddress != undefined && block.formattedAddress != null
-            ? setPlaceAddress(block.formattedAddress)
+          block.formattedAddress
+            ? setScannedAddress(block.formattedAddress)
             : null
         );
+        setPlaceAddress(scannedAddress);
       }
-
       textArray !== [] ? setPlaceName(textArray[0]) : null;
       textArray !== [] ? setPlacePhone(getPhone(textArray.join("\n"))) : null;
       textArray !== [] ? setPlaceEmail(getEmail(textArray.join("\n"))) : null;
@@ -74,12 +76,11 @@ export function AddPlace() {
         ? setPlaceWebsite(getWebsite(textArray.join("\n")))
         : null;
       currentLocation !== [] ? setPlaceLocation(currentLocation) : null;
-      scannedAddress ? setPlaceAddress(scannedAddress) : null;
       scannedLocation
         ? setPlaceLocation(scannedLocation)
         : setPlaceLocation(currentLocation);
     })();
-  }, [textArray, moreInfo]);
+  }, [textArray, moreInfo, scannedLocation, currentLocation, scannedAddress]);
 
   useEffect(() => {
     console.log(`Name : ${placeName}`);
@@ -324,13 +325,8 @@ export function AddPlace() {
                       placeEmail,
                       placeWebsite
                     );
-                    setPlaceName("");
-                    setPlaceType("");
-                    setPlaceLocation([]);
-                    setPlaceAddress("no address");
-                    setPlacePhone("");
-                    setPlaceEmail("");
-                    setPlaceWebsite("");
+                    setTextArray(null);
+                    setMoreInfo(false);
                     setOverlayVisible(false);
                   })()
                 }
@@ -347,6 +343,7 @@ export function AddPlace() {
                 color="black"
                 onPress={() => {
                   setTextArray(null);
+                  setMoreInfo(false);
                   setOverlayVisible(false);
                 }}
                 style={{
