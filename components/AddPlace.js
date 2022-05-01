@@ -42,42 +42,46 @@ export function AddPlace() {
   };
 
   useEffect(() => {
-    // textArray !== [] ? textArray.map((text) => console.log(text)) : null;
     (async () => {
+      if (!scannedAddress) {
+        let addr = await Geocoder.geocodePosition({
+          lat: currentLocation[1],
+          lng: currentLocation[0],
+        });
+
+        Object.entries(addr)[0].map((block) =>
+          block.formattedAddress != undefined && block.formattedAddress != null
+            ? setPlaceAddress(block.formattedAddress)
+            : null
+        );
+      } else {
+        console.log(`Place location :`, placeLocation);
+        let addr = await Geocoder.geocodePosition({
+          lat: placeLocation[1],
+          lng: placeLocation[0],
+        });
+        Object.entries(addr)[0].map((block) =>
+          block.formattedAddress != undefined && block.formattedAddress != null
+            ? setPlaceAddress(block.formattedAddress)
+            : null
+        );
+      }
+
       textArray !== [] ? setPlaceName(textArray[0]) : null;
-      // textArray !== []
-      //   ? textArray.map((text) => {
-      //       console.log(text);
-      //       getPhone(text) ? setPlacePhone(getPhone(text)) : null;
-      //     })
-      //   : null;
       textArray !== [] ? setPlacePhone(getPhone(textArray.join("\n"))) : null;
       textArray !== [] ? setPlaceEmail(getEmail(textArray.join("\n"))) : null;
       textArray !== []
         ? setPlaceWebsite(getWebsite(textArray.join("\n")))
         : null;
       currentLocation !== [] ? setPlaceLocation(currentLocation) : null;
-      scannedAddress
-        ? setPlaceAddress(scannedAddress)
-        : setPlaceAddress("no address");
+      scannedAddress ? setPlaceAddress(scannedAddress) : null;
       scannedLocation
         ? setPlaceLocation(scannedLocation)
         : setPlaceLocation(currentLocation);
     })();
-  }, [
-    textArray,
-    moreInfo,
-    placeName,
-    placeType,
-    placeLocation,
-    placeAddress,
-    placeEmail,
-    placePhone,
-    placeWebsite,
-  ]);
+  }, [textArray, moreInfo]);
 
   useEffect(() => {
-    // Testing
     console.log(`Name : ${placeName}`);
     console.log(`Location : ${placeLocation}`);
     console.log(`Address : ${placeAddress}`);
@@ -85,7 +89,7 @@ export function AddPlace() {
     console.log(`Phone : ${placePhone}`);
     console.log(`Website : ${placeWebsite}`);
     console.log(`Type : ${placeType}`);
-    // Get location
+
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,
@@ -97,24 +101,15 @@ export function AddPlace() {
         const { code, message } = error;
         console.warn(code, message);
       });
-    // Use geocoder
+
     (async () => {
       let loc = await Geocoder.geocodeAddress(textArray.join());
-      let position = [];
+
       loc.map((block) => {
         setScannedLocation([block.position.lat, block.position.lng]);
       });
-      // Use reverse geocoder
-      placeLocation
-        ? (position = { lat: placeLocation[0], lng: placeLocation[1] })
-        : (position = { lat: currentLocation[0], lng: currentLocation[1] });
-      let addressData = await Geocoder.geocodePosition(position);
-      Object.entries(addressData)[0].map((block) => {
-        console.log(block.formattedAddress);
-        setScannedAddress(block.formattedAddress);
-      });
     })();
-  }, [textArray, placeLocation]);
+  }, [textArray, moreInfo]);
 
   return (
     <>
@@ -319,15 +314,25 @@ export function AddPlace() {
                 mode="contained"
                 color="black"
                 onPress={() =>
-                  createplace(
-                    placeName,
-                    placeLocation,
-                    placeAddress,
-                    placeType,
-                    placePhone,
-                    placeEmail,
-                    placeWebsite
-                  )
+                  (async () => {
+                    await createplace(
+                      placeName,
+                      placeLocation,
+                      placeAddress,
+                      placeType,
+                      placePhone,
+                      placeEmail,
+                      placeWebsite
+                    );
+                    setPlaceName("");
+                    setPlaceType("");
+                    setPlaceLocation([]);
+                    setPlaceAddress("no address");
+                    setPlacePhone("");
+                    setPlaceEmail("");
+                    setPlaceWebsite("");
+                    setOverlayVisible(false);
+                  })()
                 }
                 style={{
                   width: 170,
