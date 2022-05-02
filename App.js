@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import useRealm from "./functions/useRealm";
-import useMLkit from "./functions/useMLkit";
 import { Searchbar } from "react-native-paper";
 import GetLocation from "react-native-get-location";
 import { AddPlace } from "./components/AddPlace";
@@ -14,46 +13,51 @@ MapboxGL.setAccessToken(accessToken);
 MapboxGL.setConnected(true);
 
 const App = () => {
-  const [textArray, setTextArray] = useState([]);
   const [currentPosition, setCurrentPosition] = useState([
     -5.0139426, 34.0260803,
   ]);
 
-  const { places, createplace } = useRealm();
-  const { reconizeFromCamera, recognizeFromPicker } = useMLkit();
+  const { fetchPlaces } = useRealm();
 
   useEffect(() => {
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
-      timeout: 15000,
+      timeout: 1500000,
     })
       .then((location) => {
         setCurrentPosition([location.longitude, location.latitude]);
-        // console.log(`[${location.latitude},${location.longitude}]`);
       })
       .catch((error) => {
         const { code, message } = error;
         console.warn(code, message);
       });
-  }, [currentPosition]);
+  }, []);
 
   return (
     <SafeAreaProvider style={styles.page}>
       <StatusBar translucent backgroundColor="transparent" />
-      {textArray ? textArray.map((text) => console.log(text)) : null}
       <MapboxGL.MapView
         // styleURL={"mapbox://styles/mapbox/streets-v11"}
         styleURL={"mapbox://styles/mapbox/dark-v10"}
         style={styles.map}
       >
         <MapboxGL.UserLocation />
-
         <MapboxGL.Camera
           style={{ marginTop: 12 }}
           centerCoordinate={currentPosition}
           zoomLevel={14}
           animationMode="flyTo"
         />
+        {fetchPlaces() ? (
+          fetchPlaces().map((place) => (
+            <MapboxGL.PointAnnotation
+              id={place?._id.toString()}
+              coordinate={[place?.location[0], place?.location[1]]}
+            />
+          ))
+        ) : (
+          <></>
+        )}
       </MapboxGL.MapView>
       <Searchbar
         placeholder="Search place"
@@ -89,6 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "black",
   },
   map: {
     height: "100%",

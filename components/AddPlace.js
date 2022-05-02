@@ -44,7 +44,6 @@ export function AddPlace() {
   useEffect(() => {
     (async () => {
       if (!scannedLocation) {
-        console.log(`WAA ZAB IF`);
         let addr = await Geocoder.geocodePosition({
           lat: currentLocation[1],
           lng: currentLocation[0],
@@ -56,7 +55,6 @@ export function AddPlace() {
             : null
         );
       } else {
-        console.log(`WAA ZAB ELSE`);
         console.log(`Scanned address :`, scannedAddress);
         let addr = await Geocoder.geocodePosition({
           lat: placeLocation[0],
@@ -83,13 +81,13 @@ export function AddPlace() {
   }, [textArray, moreInfo, scannedLocation, currentLocation, scannedAddress]);
 
   useEffect(() => {
-    console.log(`Name : ${placeName}`);
-    console.log(`Location : ${placeLocation}`);
-    console.log(`Address : ${placeAddress}`);
-    console.log(`Email : ${placeEmail}`);
-    console.log(`Phone : ${placePhone}`);
-    console.log(`Website : ${placeWebsite}`);
-    console.log(`Type : ${placeType}`);
+    // console.log(`Name : ${placeName}`);
+    // console.log(`Location : ${placeLocation}`);
+    // console.log(`Address : ${placeAddress}`);
+    // console.log(`Email : ${placeEmail}`);
+    // console.log(`Phone : ${placePhone}`);
+    // console.log(`Website : ${placeWebsite}`);
+    // console.log(`Type : ${placeType}`);
 
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
@@ -258,6 +256,10 @@ export function AddPlace() {
                 <Picker.Item label="Store" value="Store" />
                 <Picker.Item label="Cafe" value="Cafe" />
                 <Picker.Item label="Restaurant" value="Restaurant" />
+                <Picker.Item label="Bakery" value="Bakery" />
+                <Picker.Item label="Gym" value="Gym" />
+                <Picker.Item label="Public shower" value="Public shower" />
+                <Picker.Item label="Other " value="Other" />
               </Picker>
             </View>
             {!moreInfo ? (

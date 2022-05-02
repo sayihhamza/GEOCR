@@ -1,24 +1,24 @@
-import {useState, useEffect, useRef} from 'react';
-import Realm, {BSON} from 'realm';
+import { useState, useEffect, useRef } from "react";
+import Realm, { BSON } from "realm";
 
 const PlaceSchema = {
-  name: 'Place',
+  name: "Place",
   properties: {
-    _id: 'objectId',
-    name: 'string',
-    location: 'float[]',
-    formattedAddress: 'string',
-    type: 'string',
-    phoneNumber: 'string?',
-    emailAddress: 'string?',
-    website: 'string?',
+    _id: "objectId",
+    name: "string",
+    location: "float[]",
+    formattedAddress: "string",
+    type: "string",
+    phoneNumber: "string?",
+    emailAddress: "string?",
+    website: "string?",
   },
-  primaryKey: '_id',
+  primaryKey: "_id",
 };
 
 const realmApp = new Realm.App({
-  id: 'nativemap-doaxl',
-  baseUrl: 'https://realm.mongodb.com',
+  id: "nativemap-doaxl",
+  baseUrl: "https://realm.mongodb.com",
 });
 
 const useRealm = () => {
@@ -26,7 +26,7 @@ const useRealm = () => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    const creds = Realm.Credentials.emailPassword('system', 'password');
+    const creds = Realm.Credentials.emailPassword("system", "password");
     (async () => {
       await realmApp.logIn(creds);
     })();
@@ -39,14 +39,14 @@ const useRealm = () => {
     };
 
     Realm.open(config)
-      .then(realmInstance => {
+      .then((realmInstance) => {
         realmReference.current = realmInstance;
         const realm = realmReference.current;
         if (realm) {
-          setPlaces(realm.objects('Place'));
+          setPlaces(realm.objects("Place"));
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(`an error occurred opening the realm ${err}`);
       });
 
@@ -67,12 +67,12 @@ const useRealm = () => {
     placeType,
     placePhoneNumber,
     placeEmailAddress,
-    placeWebsite,
+    placeWebsite
   ) => {
     const realm = realmReference.current;
     if (realm) {
       realm.write(() => {
-        realm.create('Place', {
+        realm.create("Place", {
           _id: new BSON.ObjectID(),
           partition: realmApp.currentUser?.id,
           name: placeName,
@@ -86,7 +86,9 @@ const useRealm = () => {
       });
     }
   };
-  return {places, createplace};
+
+  const fetchPlaces = () => places;
+  return { fetchPlaces, createplace };
 };
 
 export default useRealm;
