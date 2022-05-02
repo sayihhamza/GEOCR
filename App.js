@@ -3,8 +3,8 @@ import { Text, View, StyleSheet, StatusBar } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import useRealm from "./functions/useRealm";
-import { Searchbar } from "react-native-paper";
 import GetLocation from "react-native-get-location";
+import { SearchPlace } from "./components/SearchPlace";
 import { AddPlace } from "./components/AddPlace";
 
 const accessToken =
@@ -59,28 +59,7 @@ const App = () => {
           <></>
         )}
       </MapboxGL.MapView>
-      <Searchbar
-        placeholder="Search place"
-        // onChangeText={onChangeSearch}
-        // value={searchQuery}
-        iconColor="white"
-        theme={{
-          dark: true,
-          colors: {
-            primary: "white",
-            text: "white",
-            placeholder: "white",
-          },
-          roundness: 50,
-        }}
-        style={{
-          position: "absolute",
-          top: 80,
-          width: 350,
-          height: 42,
-          backgroundColor: "black",
-        }}
-      />
+      <SearchPlace />
       <AddPlace />
     </SafeAreaProvider>
   );
