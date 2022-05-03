@@ -6,7 +6,6 @@ import useRealm from "../functions/useRealm";
 export const SearchPlace = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState([]);
-  const [isFound, setIsFound] = useState(false);
   const { fetchPlaces } = useRealm();
 
   const onChangeSearch = (e) => {
@@ -22,7 +21,7 @@ export const SearchPlace = () => {
         console.log(place);
       });
       console.log(e);
-      feltredPlaces ? setIsFound(true) : setIsFound(false);
+
       setPlaces([...feltredPlaces]);
     } else {
       setSearchQuery("");
@@ -80,7 +79,10 @@ export const SearchPlace = () => {
           }}
         >
           {places?.slice(0, 5).map((place) => (
-            <View style={{ backgroundColor: "black" }}>
+            <View
+              style={{ backgroundColor: "black" }}
+              key={place._id.toString()}
+            >
               <Text style={{ fontSize: 20 }}>{place.name}</Text>
               <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
             </View>

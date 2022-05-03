@@ -67,7 +67,7 @@ export function AddPlace() {
         );
         setPlaceAddress(scannedAddress);
       }
-      textArray !== [] ? setPlaceName(textArray[0]) : null;
+      textArray[0] ? setPlaceName(textArray[0]) : null;
       textArray !== [] ? setPlacePhone(getPhone(textArray.join("\n"))) : null;
       textArray !== [] ? setPlaceEmail(getEmail(textArray.join("\n"))) : null;
       textArray !== []
@@ -81,14 +81,6 @@ export function AddPlace() {
   }, [textArray, moreInfo, scannedLocation, currentLocation, scannedAddress]);
 
   useEffect(() => {
-    // console.log(`Name : ${placeName}`);
-    // console.log(`Location : ${placeLocation}`);
-    // console.log(`Address : ${placeAddress}`);
-    // console.log(`Email : ${placeEmail}`);
-    // console.log(`Phone : ${placePhone}`);
-    // console.log(`Website : ${placeWebsite}`);
-    // console.log(`Type : ${placeType}`);
-
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 15000,

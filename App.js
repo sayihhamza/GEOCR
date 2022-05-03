@@ -13,9 +13,8 @@ MapboxGL.setAccessToken(accessToken);
 MapboxGL.setConnected(true);
 
 const App = () => {
-  const [currentPosition, setCurrentPosition] = useState([
-    -5.0139426, 34.0260803,
-  ]);
+  const [loaded, setLoaded] = useState(false);
+  const [currentPosition, setCurrentPosition] = useState([]);
 
   const { fetchPlaces } = useRealm();
 
@@ -26,41 +25,52 @@ const App = () => {
     })
       .then((location) => {
         setCurrentPosition([location.longitude, location.latitude]);
+        setLoaded(true);
       })
       .catch((error) => {
         const { code, message } = error;
         console.warn(code, message);
       });
-  }, []);
+  }, [currentPosition]);
 
   return (
     <SafeAreaProvider style={styles.page}>
       <StatusBar translucent backgroundColor="transparent" />
-      <MapboxGL.MapView
-        // styleURL={"mapbox://styles/mapbox/streets-v11"}
-        styleURL={"mapbox://styles/mapbox/dark-v10"}
-        style={styles.map}
-      >
-        <MapboxGL.UserLocation />
-        <MapboxGL.Camera
-          style={{ marginTop: 12 }}
-          centerCoordinate={currentPosition}
-          zoomLevel={14}
-          animationMode="flyTo"
-        />
-        {fetchPlaces() ? (
-          fetchPlaces().map((place) => (
-            <MapboxGL.PointAnnotation
-              id={place?._id.toString()}
-              coordinate={[place?.location[0], place?.location[1]]}
+      {loaded ? (
+        <>
+          <MapboxGL.MapView
+            // styleURL={"mapbox://styles/mapbox/streets-v11"}
+            styleURL={"mapbox://styles/mapbox/dark-v10"}
+            style={styles.map}
+          >
+            <MapboxGL.UserLocation />
+
+            <MapboxGL.Camera
+              style={{ marginTop: 12 }}
+              centerCoordinate={currentPosition}
+              zoomLevel={14}
+              animationMode="flyTo"
             />
-          ))
-        ) : (
-          <></>
-        )}
-      </MapboxGL.MapView>
-      <SearchPlace />
-      <AddPlace />
+
+            {fetchPlaces() ? (
+              fetchPlaces().map((place) => (
+                <MapboxGL.PointAnnotation
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+          </MapboxGL.MapView>
+          <SearchPlace />
+          <AddPlace />
+        </>
+      ) : (
+        <></>
+      )}
     </SafeAreaProvider>
   );
 };
