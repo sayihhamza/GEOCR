@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Searchbar, Button } from "react-native-paper";
 import { Overlay } from "@rneui/themed";
 import Geocoder from "@timwangdev/react-native-geocoder";
@@ -67,12 +67,17 @@ const OverlayExample = ({ visible, setVisible, setTextArray }) => {
   );
 };
 
-export const SearchPlace = ({ currentPosition, setCurrentPosition }) => {
+export const SearchPlace = ({
+  currentPosition,
+  setCurrentPosition,
+  scannedPlace,
+  setScnnedPlace,
+}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState([]);
   const [visible, setVisible] = useState(false);
   const [textArray, setTextArray] = useState(null);
-  const [scannedPlace, setScnnedPlace] = useState();
+
   const { fetchPlaces } = useRealm();
 
   const onChangeSearch = (e) => {
@@ -100,15 +105,17 @@ export const SearchPlace = ({ currentPosition, setCurrentPosition }) => {
     (async () => {
       let loc = await Geocoder.geocodeAddress(textArray.join());
       loc.map((block) => {
-        console.log(block);
-        setScnnedPlace([block.position.lng, block.position.lat]);
+        // console.log(block);
+        setScnnedPlace({
+          _id: block.formattedAddress,
+          name: block.formattedAddress,
+          location: [block.position.lng, block.position.lat],
+        });
         setVisible(false);
       });
     })();
-    scannedPlace
-      ? setCurrentPosition([scannedPlace[0], scannedPlace[1]])
-      : null;
-  }, [textArray, currentPosition, scannedPlace]);
+    scannedPlace ? setCurrentPosition(scannedPlace.location) : null;
+  }, [textArray, scannedPlace]);
 
   // useEffect(() => {
   //   console.log(textArray);

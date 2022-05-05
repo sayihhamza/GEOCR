@@ -15,6 +15,7 @@ MapboxGL.setConnected(true);
 const App = () => {
   const [loaded, setLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState([]);
+  const [scannedPlace, setScnnedPlace] = useState(null);
 
   const { fetchPlaces } = useRealm();
 
@@ -51,7 +52,7 @@ const App = () => {
               zoomLevel={14}
               animationMode="flyTo"
             />
-            {/* 
+
             {fetchPlaces() ? (
               fetchPlaces()?.map((place) => (
                 <MapboxGL.PointAnnotation
@@ -63,11 +64,23 @@ const App = () => {
               ))
             ) : (
               <></>
-            )} */}
+            )}
+            {scannedPlace ? (
+              <MapboxGL.PointAnnotation
+                id="1"
+                coordinate={scannedPlace?.location}
+              >
+                <MapboxGL.Callout title={scannedPlace?.name} />
+              </MapboxGL.PointAnnotation>
+            ) : (
+              <></>
+            )}
           </MapboxGL.MapView>
           <SearchPlace
             currentPosition={currentPosition}
             setCurrentPosition={setCurrentPosition}
+            scannedPlace={scannedPlace}
+            setScnnedPlace={setScnnedPlace}
           />
           <AddPlace />
         </>
