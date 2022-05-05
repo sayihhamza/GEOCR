@@ -8,6 +8,8 @@ import useRealm from "../functions/useRealm";
 import GetLocation from "react-native-get-location";
 import Geocoder from "@timwangdev/react-native-geocoder";
 import gallery from "../assets/gallery.png";
+import add from "../assets/add.png";
+import camera from "../assets/camera.png";
 
 export function AddPlace() {
   const [placeName, setPlaceName] = useState("");
@@ -122,7 +124,7 @@ export function AddPlace() {
                 <Button
                   mode="contained"
                   color="#1F1F1F"
-                  icon="camera"
+                  icon={camera}
                   onPress={() => {
                     (async () => {
                       await recognizeFromCamera(setTextArray);
@@ -140,7 +142,7 @@ export function AddPlace() {
                 <Button
                   mode="contained"
                   color="#1F1F1F"
-                  icon="camera"
+                  icon={camera}
                   onPress={() => {
                     (async () => {
                       await recognizeFromCamera(setTextArray);
@@ -354,6 +356,7 @@ export function AddPlace() {
       </Overlay>
       <Button
         mode="contained"
+        icon={add}
         color="black"
         onPress={() => setOverlayVisible(true)}
         style={{
@@ -362,8 +365,9 @@ export function AddPlace() {
           width: 350,
           borderRadius: 50,
         }}
+        contentStyle={{ justifyContent: "flex-start" }}
       >
-        Add place
+        Add place to map
       </Button>
     </>
   );

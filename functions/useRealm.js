@@ -33,8 +33,8 @@ const useRealm = () => {
     const config = {
       schema: [PlaceSchema],
       sync: {
-        user: realmApp.currentUser,
-        partitionValue: realmApp.currentUser?.id,
+        user: realmApp?.currentUser,
+        partitionValue: realmApp?.currentUser?.id,
       },
     };
 

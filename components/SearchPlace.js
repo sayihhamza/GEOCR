@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Searchbar } from "react-native-paper";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import camera from "../assets/camera.png";
 import useRealm from "../functions/useRealm";
 
-export const SearchPlace = () => {
+export const SearchPlace = ({ setCurrentPosition }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState([]);
   const { fetchPlaces } = useRealm();
@@ -46,6 +47,7 @@ export const SearchPlace = () => {
         placeholder="Search place"
         onChangeText={onChangeSearch}
         value={searchQuery}
+        icon={camera}
         iconColor="white"
         theme={{
           dark: true,
@@ -79,13 +81,16 @@ export const SearchPlace = () => {
           }}
         >
           {places?.slice(0, 5).map((place) => (
-            <View
+            <TouchableOpacity
               style={{ backgroundColor: "black" }}
               key={place._id.toString()}
+              onPress={() =>
+                setCurrentPosition([place.location[0], place.location[1]])
+              }
             >
               <Text style={{ fontSize: 20 }}>{place.name}</Text>
               <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       )}

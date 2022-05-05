@@ -31,7 +31,7 @@ const App = () => {
         const { code, message } = error;
         console.warn(code, message);
       });
-  }, [currentPosition]);
+  }, []);
 
   return (
     <SafeAreaProvider style={styles.page}>
@@ -65,7 +65,7 @@ const App = () => {
               <></>
             )}
           </MapboxGL.MapView>
-          <SearchPlace />
+          <SearchPlace setCurrentPosition={setCurrentPosition} />
           <AddPlace />
         </>
       ) : (
