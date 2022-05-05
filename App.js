@@ -51,9 +51,9 @@ const App = () => {
               zoomLevel={14}
               animationMode="flyTo"
             />
-
+            {/* 
             {fetchPlaces() ? (
-              fetchPlaces().map((place) => (
+              fetchPlaces()?.map((place) => (
                 <MapboxGL.PointAnnotation
                   id={place?._id.toString()}
                   coordinate={[place?.location[0], place?.location[1]]}
@@ -63,9 +63,12 @@ const App = () => {
               ))
             ) : (
               <></>
-            )}
+            )} */}
           </MapboxGL.MapView>
-          <SearchPlace setCurrentPosition={setCurrentPosition} />
+          <SearchPlace
+            currentPosition={currentPosition}
+            setCurrentPosition={setCurrentPosition}
+          />
           <AddPlace />
         </>
       ) : (

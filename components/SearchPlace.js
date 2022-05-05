@@ -1,16 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { Searchbar } from "react-native-paper";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
+import { Searchbar, Button } from "react-native-paper";
+import { Overlay } from "@rneui/themed";
+import Geocoder from "@timwangdev/react-native-geocoder";
 import camera from "../assets/camera.png";
+import gallery from "../assets/gallery.png";
 import useRealm from "../functions/useRealm";
+import useMLkit from "../functions/useMLkit";
 
-export const SearchPlace = ({ setCurrentPosition }) => {
+const OverlayExample = ({ visible, setVisible, setTextArray }) => {
+  const toggleOverlay = () => {
+    setVisible(false);
+  };
+
+  const { recognizeFromCamera, recognizeFromPicker } = useMLkit();
+
+  return (
+    <View>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        overlayStyle={{
+          width: "90%",
+          backgroundColor: "black",
+          borderRadius: 30,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          mode="contained"
+          color="#1F1F1F"
+          icon={camera}
+          onPress={() => {
+            (async () => {
+              await recognizeFromCamera(setTextArray);
+            })();
+          }}
+          style={{
+            width: 350,
+            borderRadius: 50,
+            margin: 4,
+          }}
+        >
+          Address from camera
+        </Button>
+        <Button
+          mode="contained"
+          color="#1F1F1F"
+          icon={gallery}
+          onPress={() => {
+            (async () => {
+              await recognizeFromPicker(setTextArray);
+            })();
+          }}
+          style={{
+            width: 350,
+            borderRadius: 50,
+            margin: 4,
+          }}
+        >
+          Address from gallery
+        </Button>
+      </Overlay>
+    </View>
+  );
+};
+
+export const SearchPlace = ({ currentPosition, setCurrentPosition }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [textArray, setTextArray] = useState(null);
+  const [scannedPlace, setScnnedPlace] = useState();
   const { fetchPlaces } = useRealm();
 
   const onChangeSearch = (e) => {
-    if (e != "") {
+    if (e != "" && fetchPlaces !== []) {
       setSearchQuery(e);
       const strEx = `[a-zA-Z]*${e}[a-zA-Z]*`;
       const regEx = new RegExp(strEx, "gi");
@@ -30,6 +96,23 @@ export const SearchPlace = ({ setCurrentPosition }) => {
     }
   };
 
+  useEffect(() => {
+    (async () => {
+      let loc = await Geocoder.geocodeAddress(textArray.join());
+      loc.map((block) => {
+        console.log(block);
+        setScnnedPlace([block.position.lng, block.position.lat]);
+        setVisible(false);
+      });
+    })();
+    scannedPlace
+      ? setCurrentPosition([scannedPlace[0], scannedPlace[1]])
+      : null;
+  }, [textArray, currentPosition, scannedPlace]);
+
+  // useEffect(() => {
+  //   console.log(textArray);
+  // }, [textArray]);
   //   useEffect(() => {
   //     fetchPlaces() ? fetchPlaces().map((place) => console.log(place)) : null;
   //   }, [fetchPlaces]);
@@ -49,6 +132,7 @@ export const SearchPlace = ({ setCurrentPosition }) => {
         value={searchQuery}
         icon={camera}
         iconColor="white"
+        onIconPress={() => setVisible(true)}
         theme={{
           dark: true,
           colors: {
@@ -94,6 +178,11 @@ export const SearchPlace = ({ setCurrentPosition }) => {
           ))}
         </View>
       )}
+      <OverlayExample
+        visible={visible}
+        setVisible={setVisible}
+        setTextArray={setTextArray}
+      />
     </View>
   );
 };

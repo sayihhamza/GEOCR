@@ -218,7 +218,7 @@ export function AddPlace() {
                     margin: 4,
                   }}
                 >
-                  <Text style={{ color: "white", fontSize: 10 }}>
+                  <Text style={{ color: "white", fontSize: 12 }}>
                     want to open camera ?
                   </Text>
                 </Button>
