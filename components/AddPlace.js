@@ -59,8 +59,8 @@ export function AddPlace() {
       } else {
         console.log(`Scanned address :`, scannedAddress);
         let addr = await Geocoder.geocodePosition({
-          lat: placeLocation[0],
-          lng: placeLocation[1],
+          lat: placeLocation[1],
+          lng: placeLocation[0],
         });
         Object.entries(addr)[0].map((block) =>
           block.formattedAddress
@@ -99,7 +99,7 @@ export function AddPlace() {
       let loc = await Geocoder.geocodeAddress(textArray.join());
 
       loc.map((block) => {
-        setScannedLocation([block.position.lat, block.position.lng]);
+        setScannedLocation([block.position.lng, block.position.lat]);
       });
     })();
   }, [textArray, moreInfo]);

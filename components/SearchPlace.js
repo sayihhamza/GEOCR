@@ -111,6 +111,7 @@ export const SearchPlace = ({
           name: block.formattedAddress,
           location: [block.position.lng, block.position.lat],
         });
+        setSearchQuery(block.formattedAddress);
         setVisible(false);
       });
     })();
