@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Text, View, StyleSheet, StatusBar, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  StatusBar,
+  TextInput,
+  ScrollView,
+} from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-paper";
 import MapboxGL from "@react-native-mapbox-gl/maps";
@@ -118,6 +125,127 @@ const NativeMAP = () => {
           ) : (
             <></>
           )}
+
+          <ScrollView
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{ flexDirection: "row", position: "absolute", bottom: 20 }}
+          >
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Stores
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Cafes
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Restaurants
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Bakery
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Gym
+              </Text>
+            </View>
+            <View
+              style={{
+                height: 60,
+                width: 100,
+                borderRadius: 20,
+                backgroundColor: "#131313",
+                margin: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                Others
+              </Text>
+            </View>
+          </ScrollView>
         </>
       ) : (
         <></>
@@ -127,8 +255,8 @@ const NativeMAP = () => {
 };
 
 const Welcome = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("FUCKING");
+  const [password, setPassword] = useState("FUCKING");
   const [message, setMessage] = useState("");
 
   useEffect(() => {

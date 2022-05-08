@@ -18,11 +18,9 @@ export const ShowPlace = ({
     <View
       style={{
         position: "absolute",
-        bottom: 50,
-
+        bottom: 100,
         backgroundColor: "black",
         borderRadius: 20,
-
         height: 190,
         width: 350,
         padding: 10,
@@ -44,7 +42,8 @@ export const ShowPlace = ({
           style={{
             fontSize: 19,
             color: "white",
-
+            position: "absolute",
+            right: 15,
             fontFamily: "Times New Roman",
           }}
         >
