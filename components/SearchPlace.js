@@ -81,10 +81,10 @@ export const SearchPlace = ({
   const [places, setPlaces] = useState([]);
   const [visible, setVisible] = useState(false);
   const [textArray, setTextArray] = useState(null);
-
+  const [searchGeocoder, setSearchGeocoder] = useState(null);
   const { fetchPlaces } = useRealm();
 
-  const onChangeSearch = (e) => {
+  const onChangeSearch = async (e) => {
     if (e != "" && fetchPlaces !== []) {
       setSearchQuery(e);
       const strEx = `[a-zA-Z]*${e}[a-zA-Z]*`;
@@ -97,10 +97,13 @@ export const SearchPlace = ({
         console.log(place);
       });
       console.log(e);
-
       setPlaces([...feltredPlaces]);
+      console.log(`ha huwa`);
+      setSearchGeocoder(await Geocoder.geocodeAddress(searchQuery));
+      console.log(searchGeocoder);
     } else {
       setSearchQuery("");
+      setSearchGeocoder(null);
       setPlaces([]);
     }
   };
@@ -123,7 +126,6 @@ export const SearchPlace = ({
         setVisible(false);
       });
     })();
-    console.log("again");
   }, [textArray]);
 
   useEffect(() => {
@@ -168,10 +170,10 @@ export const SearchPlace = ({
           backgroundColor: "black",
           elevation: 4,
           zIndex: 4,
-          opacity: 0.7,
+          // opacity: 0.7,
         }}
       />
-      {searchQuery != "" && places[0] && (
+      {searchQuery != "" && (searchGeocoder || places[0]) ? (
         <View
           style={{
             width: 350,
@@ -185,23 +187,64 @@ export const SearchPlace = ({
             borderRadius: 10,
           }}
         >
-          {places?.slice(0, 5).map((place) => (
-            <TouchableOpacity
-              style={{ backgroundColor: "black" }}
-              key={place._id.toString()}
-              onPress={() => {
-                setCurrentPosition([place.location[0], place.location[1]]);
-                setShowPlace(place);
-              }}
-            >
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ fontSize: 20 }}>{place.name}</Text>
-              </View>
-              <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
-            </TouchableOpacity>
-          ))}
+          {searchQuery != "" && places[0] && (
+            <View>
+              {places?.slice(0, 5).map((place) => (
+                <TouchableOpacity
+                  style={{ backgroundColor: "black" }}
+                  key={place._id.toString()}
+                  onPress={() => {
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                    setShowPlace(place);
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 20 }}>{place.name}</Text>
+                  </View>
+                  <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          )}
+          <View>
+            {searchGeocoder ? (
+              searchGeocoder?.map((place) => (
+                <TouchableOpacity
+                  style={{ backgroundColor: "black" }}
+                  key={place.formattedAddress}
+                  onPress={() => {
+                    setCurrentPosition([
+                      place.position.lng,
+                      place.position.lat,
+                    ]);
+                    setScnnedPlace({
+                      _id: place.formattedAddress,
+                      name: place.formattedAddress,
+                      location: [place.position.lng, place.position.lat],
+                    });
+                    setShowPlace({
+                      name: place.formattedAddress,
+                      formattedAddress: place.formattedAddress,
+                    });
+                  }}
+                >
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 20 }}>
+                      {place.formattedAddress}
+                    </Text>
+                  </View>
+                  <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
+                </TouchableOpacity>
+              ))
+            ) : (
+              <></>
+            )}
+          </View>
         </View>
+      ) : (
+        <></>
       )}
+
       <OverlayExample
         visible={visible}
         setVisible={setVisible}

@@ -377,7 +377,7 @@ export function AddPlace() {
           top: 35,
           width: 350,
           borderRadius: 50,
-          opacity: 0.7,
+          // opacity: 0.7,
           height: 42,
         }}
         contentStyle={{ justifyContent: "flex-start" }}

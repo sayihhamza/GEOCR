@@ -66,6 +66,7 @@ const App = () => {
                     setShowPlace(place);
                   }}
                   id={place?._id.toString()}
+                  key={place?._id.toString()}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
