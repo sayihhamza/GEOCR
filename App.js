@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, StatusBar } from "react-native";
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Text, View, StyleSheet, StatusBar, TextInput } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Button } from "react-native-paper";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import useRealm from "./functions/useRealm";
 import GetLocation from "react-native-get-location";
@@ -13,7 +17,9 @@ const accessToken =
 MapboxGL.setAccessToken(accessToken);
 MapboxGL.setConnected(true);
 
-const App = () => {
+const Stack = createStackNavigator();
+
+const NativeMAP = () => {
   const [loaded, setLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState([]);
   const [userPosition, setUserPosition] = useState([]);
@@ -51,7 +57,6 @@ const App = () => {
             style={styles.map}
           >
             <MapboxGL.UserLocation />
-
             <MapboxGL.Camera
               style={{ marginTop: 12 }}
               centerCoordinate={currentPosition}
@@ -118,6 +123,134 @@ const App = () => {
         <></>
       )}
     </SafeAreaProvider>
+  );
+};
+
+const Welcome = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    email.length < 5 && email.length > 0
+      ? setMessage("email is short")
+      : setMessage("");
+    password.length < 5 && password.length > 0
+      ? setMessage("password is short")
+      : setMessage("");
+  }, [email, password]);
+  return (
+    <View
+      style={{
+        backgroundColor: "black",
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 40,
+          fontWeight: "bold",
+          marginBottom: 40,
+          color: "white",
+        }}
+      >
+        Native MAP
+      </Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={setEmail}
+          value={email}
+          placeholder="email"
+          style={{
+            borderColor: "white",
+            borderWidth: 1,
+            margin: 5,
+            padding: 10,
+            borderRadius: 15,
+            width: 300,
+          }}
+          autoCapitalize="none"
+        />
+      </View>
+      <View style={{ padding: 5, marginBottom: 50 }}>
+        <TextInput
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          placeholder="password"
+          style={{
+            borderColor: "white",
+            borderWidth: 1,
+            margin: 5,
+            padding: 10,
+            borderRadius: 15,
+            width: 300,
+          }}
+          secureTextEntry
+        />
+      </View>
+      <Button
+        mode="contained"
+        color="white"
+        onPress={() => {
+          if (email.length > 5 && password.length > 5) {
+            navigation.navigate("App View");
+          } else {
+            setMessage("email or password is short");
+          }
+        }}
+        style={{
+          margin: 5,
+          width: 300,
+          borderRadius: 15,
+          alignItems: "center",
+        }}
+        contentStyle={{ justifyContent: "flex-start" }}
+      >
+        SING IN
+      </Button>
+      <Button
+        mode="contained"
+        color="white"
+        onPress={() => {
+          if (email.length > 5 && password.length > 5) {
+            navigation.navigate("App View");
+          } else {
+            setMessage("email or password is short");
+          }
+        }}
+        style={{
+          margin: 5,
+          width: 300,
+          borderRadius: 15,
+          alignItems: "center",
+        }}
+        contentStyle={{ justifyContent: "flex-start" }}
+      >
+        <Text>SING UP</Text>
+      </Button>
+      <Text>{message}</Text>
+    </View>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Welcome View"
+          component={Welcome}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="App View"
+          component={NativeMAP}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

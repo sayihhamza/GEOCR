@@ -26,7 +26,7 @@ export const ShowPlace = ({
         height: 190,
         width: 350,
         padding: 10,
-        opacity: 0.6,
+        opacity: 0.7,
       }}
     >
       <View style={{ flexDirection: "row" }}>
@@ -44,7 +44,7 @@ export const ShowPlace = ({
           style={{
             fontSize: 19,
             color: "white",
-            fontWeight: "bold",
+
             fontFamily: "Times New Roman",
           }}
         >
@@ -55,8 +55,8 @@ export const ShowPlace = ({
       <Text
         style={{
           fontSize: 13,
-          color: "#ABC5E5",
-          fontWeight: "bold",
+          color: "white",
+
           fontFamily: "Times New Roman",
         }}
       >
@@ -65,8 +65,8 @@ export const ShowPlace = ({
       <Text
         style={{
           fontSize: 15,
-          color: "#ABC5E5",
-          fontWeight: "bold",
+          color: "white",
+
           fontFamily: "Times New Roman",
         }}
       >
@@ -75,8 +75,8 @@ export const ShowPlace = ({
       <Text
         style={{
           fontSize: 15,
-          color: "#ABC5E5",
-          fontWeight: "bold",
+          color: "white",
+
           fontFamily: "Times New Roman",
         }}
       >
@@ -85,8 +85,8 @@ export const ShowPlace = ({
       <Text
         style={{
           fontSize: 15,
-          color: "#ABC5E5",
-          fontWeight: "bold",
+          color: "white",
+
           fontFamily: "Times New Roman",
         }}
       >
@@ -94,7 +94,7 @@ export const ShowPlace = ({
       </Text>
       <Button
         mode="contained"
-        color="#2F435B"
+        color="white"
         style={{
           width: 350,
           position: "absolute",

@@ -27,7 +27,7 @@ export function AddPlace() {
   const [cameraOption, setCameraOption] = useState(true);
   const [textArray, setTextArray] = useState(null);
   const { recognizeFromCamera, recognizeFromPicker } = useMLkit();
-  const { createplace } = useRealm();
+  const { fetchPlaces, createplace } = useRealm();
 
   const getPhone = (text) => {
     return text.match(/[\+]?\d{12}|\d{10}|\(\d{3}\)\s?-\d{6}/gi)[0];
