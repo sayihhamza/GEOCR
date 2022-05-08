@@ -158,12 +158,13 @@ export function AddPlace() {
                   Panel picture
                 </Button>
                 <Button
-                  color="black"
+                  color="grey"
+                  mode="contained"
                   onPress={() => setCameraOption(false)}
                   style={{
-                    width: 350,
+                    width: 250,
                     borderRadius: 50,
-                    margin: 4,
+                    margin: 10,
                   }}
                 >
                   <Text style={{ color: "white", fontSize: 12 }}>
@@ -210,12 +211,14 @@ export function AddPlace() {
                   Panel picture
                 </Button>
                 <Button
-                  color="black"
+                  color="grey"
+                  mode="contained"
                   onPress={() => setCameraOption(true)}
                   style={{
-                    width: 350,
+                    width: 250,
+
                     borderRadius: 50,
-                    margin: 4,
+                    margin: 10,
                   }}
                 >
                   <Text style={{ color: "white", fontSize: 12 }}>
@@ -256,6 +259,16 @@ export function AddPlace() {
                 <Picker.Item label="Other " value="Other" />
               </Picker>
             </View>
+            <Input
+              onChangeText={setPlaceAddress}
+              defaultValue={placeAddress ? placeAddress : null}
+              placeholder="Address"
+              containerStyle={{ width: 350 }}
+              style={{
+                color: "white",
+              }}
+              autoFocus={true}
+            />
             {!moreInfo ? (
               <>
                 <Button
@@ -364,6 +377,8 @@ export function AddPlace() {
           top: 35,
           width: 350,
           borderRadius: 50,
+          opacity: 0.7,
+          height: 42,
         }}
         contentStyle={{ justifyContent: "flex-start" }}
       >

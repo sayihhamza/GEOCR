@@ -72,8 +72,12 @@ export const SearchPlace = ({
   setCurrentPosition,
   scannedPlace,
   setScnnedPlace,
+  showPlace,
+  setShowPlace,
+  searchQuery,
+  setSearchQuery,
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
   const [places, setPlaces] = useState([]);
   const [visible, setVisible] = useState(false);
   const [textArray, setTextArray] = useState(null);
@@ -111,12 +115,20 @@ export const SearchPlace = ({
           name: block.formattedAddress,
           location: [block.position.lng, block.position.lat],
         });
+        setShowPlace({
+          name: block.formattedAddress,
+          formattedAddress: block.formattedAddress,
+        });
         setSearchQuery(block.formattedAddress);
         setVisible(false);
       });
     })();
-    scannedPlace ? setCurrentPosition(scannedPlace.location) : null;
-  }, [textArray, scannedPlace]);
+    console.log("again");
+  }, [textArray]);
+
+  useEffect(() => {
+    scannedPlace ? setCurrentPosition(scannedPlace?.location) : null;
+  }, [scannedPlace]);
 
   // useEffect(() => {
   //   console.log(textArray);
@@ -156,6 +168,7 @@ export const SearchPlace = ({
           backgroundColor: "black",
           elevation: 4,
           zIndex: 4,
+          opacity: 0.7,
         }}
       />
       {searchQuery != "" && places[0] && (
@@ -176,11 +189,14 @@ export const SearchPlace = ({
             <TouchableOpacity
               style={{ backgroundColor: "black" }}
               key={place._id.toString()}
-              onPress={() =>
-                setCurrentPosition([place.location[0], place.location[1]])
-              }
+              onPress={() => {
+                setCurrentPosition([place.location[0], place.location[1]]);
+                setShowPlace(place);
+              }}
             >
-              <Text style={{ fontSize: 20 }}>{place.name}</Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontSize: 20 }}>{place.name}</Text>
+              </View>
               <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
             </TouchableOpacity>
           ))}

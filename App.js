@@ -6,6 +6,7 @@ import useRealm from "./functions/useRealm";
 import GetLocation from "react-native-get-location";
 import { SearchPlace } from "./components/SearchPlace";
 import { AddPlace } from "./components/AddPlace";
+import { ShowPlace } from "./components/ShowPlace";
 
 const accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
@@ -16,10 +17,13 @@ const App = () => {
   const [loaded, setLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState([]);
   const [scannedPlace, setScnnedPlace] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showPlace, setShowPlace] = useState(null);
 
   const { fetchPlaces } = useRealm();
 
   useEffect(() => {
+    showPlace ? console.log(showPlace) : null;
     GetLocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 1500000,
@@ -56,6 +60,9 @@ const App = () => {
             {fetchPlaces() ? (
               fetchPlaces()?.map((place) => (
                 <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                  }}
                   id={place?._id.toString()}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
@@ -81,8 +88,24 @@ const App = () => {
             setCurrentPosition={setCurrentPosition}
             scannedPlace={scannedPlace}
             setScnnedPlace={setScnnedPlace}
+            showPlace={showPlace}
+            setShowPlace={setShowPlace}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
           <AddPlace />
+          {showPlace ? (
+            <ShowPlace
+              showPlace={showPlace}
+              setShowPlace={setShowPlace}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              scannedPlace={scannedPlace}
+              setScnnedPlace={setScnnedPlace}
+            />
+          ) : (
+            <></>
+          )}
         </>
       ) : (
         <></>
