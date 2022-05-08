@@ -16,6 +16,7 @@ MapboxGL.setConnected(true);
 const App = () => {
   const [loaded, setLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState([]);
+  const [userPosition, setUserPosition] = useState([]);
   const [scannedPlace, setScnnedPlace] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showPlace, setShowPlace] = useState(null);
@@ -29,6 +30,7 @@ const App = () => {
       timeout: 1500000,
     })
       .then((location) => {
+        setUserPosition([location.longitude, location.latitude]);
         setCurrentPosition([location.longitude, location.latitude]);
         setLoaded(true);
       })
@@ -74,7 +76,7 @@ const App = () => {
             )}
             {scannedPlace ? (
               <MapboxGL.PointAnnotation
-                id="1"
+                id={scannedPlace?._id}
                 coordinate={scannedPlace?.location}
               >
                 <MapboxGL.Callout title={scannedPlace?.name} />
@@ -102,6 +104,10 @@ const App = () => {
               setSearchQuery={setSearchQuery}
               scannedPlace={scannedPlace}
               setScnnedPlace={setScnnedPlace}
+              userPosition={userPosition}
+              setUserPosition={setUserPosition}
+              currentPosition={currentPosition}
+              setCurrentPosition={setCurrentPosition}
             />
           ) : (
             <></>

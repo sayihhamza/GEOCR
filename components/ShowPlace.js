@@ -9,45 +9,105 @@ export const ShowPlace = ({
   setSearchQuery,
   scannedPlace,
   setScnnedPlace,
+  userPosition,
+  setUserPosition,
+  currentPosition,
+  setCurrentPosition,
 }) => {
   return (
     <View
       style={{
         position: "absolute",
         bottom: 50,
-        backgroundColor: "#3A3E44",
-        //   borderRadius: 30,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        height: 180,
+
+        backgroundColor: "black",
+        borderRadius: 20,
+
+        height: 190,
         width: 350,
         padding: 10,
-        opacity: 0.8,
+        opacity: 0.6,
       }}
     >
       <View style={{ flexDirection: "row" }}>
-        <Text style={{ fontSize: 19, color: "white", fontWeight: "bold" }}>
+        <Text
+          style={{
+            fontSize: 19,
+            color: "white",
+            fontWeight: "bold",
+            fontFamily: "Times New Roman",
+          }}
+        >
           {showPlace?.name}
         </Text>
-        <Text style={{ fontSize: 18, color: "white" }}> {showPlace?.type}</Text>
+        <Text
+          style={{
+            fontSize: 19,
+            color: "white",
+            fontWeight: "bold",
+            fontFamily: "Times New Roman",
+          }}
+        >
+          {" "}
+          {showPlace?.type}
+        </Text>
       </View>
-      <Text style={{ fontSize: 12, color: "white" }}>
+      <Text
+        style={{
+          fontSize: 13,
+          color: "#ABC5E5",
+          fontWeight: "bold",
+          fontFamily: "Times New Roman",
+        }}
+      >
         {showPlace?.formattedAddress}
       </Text>
-      <Text style={{ fontSize: 15, color: "white" }}>
+      <Text
+        style={{
+          fontSize: 15,
+          color: "#ABC5E5",
+          fontWeight: "bold",
+          fontFamily: "Times New Roman",
+        }}
+      >
         {showPlace?.phoneNumber}
       </Text>
-      <Text style={{ fontSize: 15, color: "white" }}>
+      <Text
+        style={{
+          fontSize: 15,
+          color: "#ABC5E5",
+          fontWeight: "bold",
+          fontFamily: "Times New Roman",
+        }}
+      >
         {showPlace?.emailAddress}
       </Text>
-      <Text style={{ fontSize: 15, color: "white" }}>{showPlace?.website}</Text>
+      <Text
+        style={{
+          fontSize: 15,
+          color: "#ABC5E5",
+          fontWeight: "bold",
+          fontFamily: "Times New Roman",
+        }}
+      >
+        {showPlace?.website}
+      </Text>
       <Button
         mode="contained"
-        color="#868A8F"
-        style={{ width: 350, position: "absolute", bottom: 0 }}
+        color="#2F435B"
+        style={{
+          width: 350,
+          position: "absolute",
+          bottom: 0,
+          height: 40,
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+        }}
         onPress={() => {
           setShowPlace(null);
           setSearchQuery("");
+          setScnnedPlace(null);
+          setCurrentPosition(userPosition);
         }}
       >
         clear

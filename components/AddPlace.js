@@ -259,16 +259,6 @@ export function AddPlace() {
                 <Picker.Item label="Other " value="Other" />
               </Picker>
             </View>
-            <Input
-              onChangeText={setPlaceAddress}
-              defaultValue={placeAddress ? placeAddress : null}
-              placeholder="Address"
-              containerStyle={{ width: 350 }}
-              style={{
-                color: "white",
-              }}
-              autoFocus={true}
-            />
             {!moreInfo ? (
               <>
                 <Button
@@ -287,6 +277,16 @@ export function AddPlace() {
               </>
             ) : (
               <>
+                <Input
+                  onChangeText={setPlaceAddress}
+                  defaultValue={placeAddress ? placeAddress : null}
+                  placeholder="Address"
+                  containerStyle={{ width: 350 }}
+                  style={{
+                    color: "white",
+                  }}
+                  autoFocus={true}
+                />
                 <Input
                   onChangeText={setPlacePhone}
                   defaultValue={placePhone ? placePhone : null}
