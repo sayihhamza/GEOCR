@@ -249,7 +249,6 @@ export const SearchPlace = ({
       ) : (
         <></>
       )}
-
       <OverlayExample
         visible={visible}
         setVisible={setVisible}

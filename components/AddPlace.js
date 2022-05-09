@@ -12,19 +12,26 @@ import add from "../assets/add.png";
 import camera from "../assets/camera.png";
 
 export function AddPlace({
+  userPosition,
   currentPosition,
   setCurrentPosition,
   showPlace,
   setShowPlace,
+  setShowStores,
+  setShowCafes,
+  setShowBakery,
+  setShowRestaurants,
+  setShowGym,
+  setShowOther,
 }) {
   const [placeName, setPlaceName] = useState("");
   const [placeType, setPlaceType] = useState("Store");
-  const [placeLocation, setPlaceLocation] = useState([]);
+  const [placeLocation, setPlaceLocation] = useState(userPosition);
   const [placeAddress, setPlaceAddress] = useState("no address");
   const [placePhone, setPlacePhone] = useState("");
   const [placeEmail, setPlaceEmail] = useState("");
   const [placeWebsite, setPlaceWebsite] = useState("");
-  const [currentLocation, setCurrentLocation] = useState([]);
+  // const [currentLocation, setCurrentLocation] = useState([]);
   const [scannedLocation, setScannedLocation] = useState(null);
   const [scannedAddress, setScannedAddress] = useState(null);
   const [overlayVisible, setOverlayVisible] = useState(false);
@@ -50,12 +57,12 @@ export function AddPlace({
 
   useEffect(() => {
     (async () => {
+      let addr;
       if (!scannedLocation) {
-        let addr = await Geocoder.geocodePosition({
-          lat: currentLocation[1],
-          lng: currentLocation[0],
+        addr = await Geocoder.geocodePosition({
+          lng: userPosition[0],
+          lat: userPosition[1],
         });
-
         Object.entries(addr)[0].map((block) =>
           block.formattedAddress != undefined && block.formattedAddress != null
             ? setPlaceAddress(block.formattedAddress)
@@ -72,7 +79,10 @@ export function AddPlace({
             ? setScannedAddress(block.formattedAddress)
             : null
         );
-        setPlaceAddress(scannedAddress);
+
+        scannedAddress
+          ? setPlaceAddress(scannedAddress)
+          : setPlaceAddress(addr);
       }
       textArray[0] ? setPlaceName(textArray[0]) : null;
       textArray !== [] ? setPlacePhone(getPhone(textArray.join("\n"))) : null;
@@ -80,26 +90,31 @@ export function AddPlace({
       textArray !== []
         ? setPlaceWebsite(getWebsite(textArray.join("\n")))
         : null;
-      currentLocation !== [] ? setPlaceLocation(currentLocation) : null;
-      scannedLocation
-        ? setPlaceLocation(scannedLocation)
-        : setPlaceLocation(currentLocation);
+      // currentLocation !== [] ? setPlaceLocation(currentLocation) : null;
+      // scannedLocation
+      //   ? setPlaceLocation(scannedLocation)
+      //   : setPlaceLocation(currentLocation);
     })();
-  }, [textArray, moreInfo, scannedLocation, currentLocation, scannedAddress]);
+  }, [
+    textArray,
+    scannedAddress,
+    scannedLocation,
+    placeLocation,
+    placeAddress,
+    placeName,
+  ]);
 
   useEffect(() => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then((location) => {
-        setCurrentLocation([location.longitude, location.latitude]);
-      })
-      .catch((error) => {
-        const { code, message } = error;
-        console.warn(code, message);
-      });
+    scannedLocation
+      ? setPlaceLocation(scannedLocation)
+      : setPlaceLocation(userPosition);
+  }, [scannedLocation]);
 
+  // useEffect(() => {
+  //   user !== [] ? setPlaceLocation(currentLocation) : null;
+  // }, [currentLocation]);
+
+  useEffect(() => {
     (async () => {
       let loc = await Geocoder.geocodeAddress(textArray.join());
 
@@ -329,16 +344,53 @@ export function AddPlace({
                 mode="contained"
                 color="black"
                 onPress={() => {
-                  createplace(
-                    placeName,
-                    placeLocation,
-                    placeAddress,
-                    placeType,
-                    placePhone,
-                    placeEmail,
-                    placeWebsite
-                  );
-                  setCurrentPosition([placeLocation[0], placeLocation[1]]);
+                  switch (placeType) {
+                    case "Store":
+                      setShowStores(true);
+                      break;
+                    case "Cafe":
+                      setShowCafes(true);
+                      break;
+                    case "Restaurant":
+                      setShowRestaurants(true);
+                      break;
+                    case "Bakery":
+                      setShowBakery(true);
+                      break;
+                    case "Gym":
+                      setShowGym(true);
+                      break;
+                    case "Other":
+                      setShowOther(true);
+                      break;
+                    default:
+                      setShowStores(true);
+                  }
+                  if (placeLocation[0]) {
+                    createplace(
+                      placeName,
+                      placeLocation,
+                      placeAddress,
+                      placeType,
+                      placePhone,
+                      placeEmail,
+                      placeWebsite
+                    );
+                  } else {
+                    createplace(
+                      placeName,
+                      userPosition,
+                      placeAddress,
+                      placeType,
+                      placePhone,
+                      placeEmail,
+                      placeWebsite
+                    );
+                  }
+                  setCurrentPosition([
+                    placeLocation[0] ? placeLocation[0] : userPosition[0],
+                    placeLocation[1] ? placeLocation[1] : userPosition[1],
+                  ]);
                   setShowPlace({
                     name: placeName,
                     type: placeType,
@@ -366,6 +418,13 @@ export function AddPlace({
                   setTextArray(null);
                   setMoreInfo(false);
                   setOverlayVisible(false);
+                  setPlaceName("");
+                  setPlaceType("");
+                  setPlaceLocation(null);
+                  setPlaceAddress(null);
+                  setPlacePhone("");
+                  setPlaceEmail("");
+                  setPlaceWebsite("");
                 }}
                 style={{
                   width: 170,

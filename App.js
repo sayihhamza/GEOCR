@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-native-gesture-handler";
+import { LogBox } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
@@ -28,6 +29,16 @@ MapboxGL.setConnected(true);
 const Stack = createStackNavigator();
 
 const NativeMAP = () => {
+  LogBox.ignoreAllLogs();
+  const {
+    fetchPlaces,
+    fetchStores,
+    fetchOther,
+    fetchGym,
+    fetchBakery,
+    fetchRestaurants,
+    fetchCafes,
+  } = useRealm();
   const [loaded, setLoaded] = useState(false);
   const [currentPosition, setCurrentPosition] = useState([]);
   const [userPosition, setUserPosition] = useState([]);
@@ -40,16 +51,6 @@ const NativeMAP = () => {
   const [showRestaurants, setShowRestaurants] = useState(false);
   const [showGym, setShowGym] = useState(false);
   const [showOther, setShowOther] = useState(false);
-
-  const {
-    fetchPlaces,
-    fetchStores,
-    fetchOther,
-    fetchGym,
-    fetchBakery,
-    fetchRestaurants,
-    fetchCafes,
-  } = useRealm();
 
   // useEffect(() => {
   //   fetchStores() !== [] ? console.log(fetchStores()) : null;
@@ -95,13 +96,14 @@ const NativeMAP = () => {
             />
 
             {fetchStores() && showStores ? (
-              fetchStores()?.map((place) => (
+              fetchStores()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -111,13 +113,14 @@ const NativeMAP = () => {
               <></>
             )}
             {fetchCafes() && showCafes ? (
-              fetchCafes()?.map((place) => (
+              fetchCafes()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -127,13 +130,14 @@ const NativeMAP = () => {
               <></>
             )}
             {fetchBakery() && showBakery ? (
-              fetchBakery()?.map((place) => (
+              fetchBakery()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -143,13 +147,14 @@ const NativeMAP = () => {
               <></>
             )}
             {fetchRestaurants() && showRestaurants ? (
-              fetchRestaurants()?.map((place) => (
+              fetchRestaurants()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -159,13 +164,14 @@ const NativeMAP = () => {
               <></>
             )}
             {fetchGym() && showGym ? (
-              fetchGym()?.map((place) => (
+              fetchGym()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -175,13 +181,14 @@ const NativeMAP = () => {
               <></>
             )}
             {fetchOther() && showOther ? (
-              fetchOther()?.map((place) => (
+              fetchOther()?.map((place, index) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
                     setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
+                  key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -212,10 +219,17 @@ const NativeMAP = () => {
             setSearchQuery={setSearchQuery}
           />
           <AddPlace
+            userPosition={userPosition}
             currentPosition={currentPosition}
             setCurrentPosition={setCurrentPosition}
             showPlace={showPlace}
             setShowPlace={setShowPlace}
+            setShowStores={setShowStores}
+            setShowCafes={setShowCafes}
+            setShowRestaurants={setShowRestaurants}
+            setShowBakery={setShowBakery}
+            setShowGym={setShowGym}
+            setShowOther={setShowOther}
           />
           {showPlace ? (
             <ShowPlace
@@ -375,6 +389,7 @@ const NativeMAP = () => {
 };
 
 const Welcome = ({ navigation }) => {
+  LogBox.ignoreAllLogs();
   const [email, setEmail] = useState("FUCKING");
   const [password, setPassword] = useState("FUCKING");
   const [message, setMessage] = useState("");
@@ -484,6 +499,7 @@ const Welcome = ({ navigation }) => {
 };
 
 const App = () => {
+  LogBox.ignoreAllLogs();
   return (
     <NavigationContainer>
       <Stack.Navigator>

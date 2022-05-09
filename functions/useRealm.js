@@ -32,47 +32,56 @@ const useRealm = () => {
   const [other, setOther] = useState([]);
 
   useEffect(() => {
-    const creds = Realm.Credentials.emailPassword("system", "password");
     (async () => {
+      const creds = Realm.Credentials.emailPassword("system", "password");
       await realmApp.logIn(creds);
-    })();
-    const config = {
-      schema: [PlaceSchema],
-      sync: {
-        user: realmApp?.currentUser,
-        partitionValue: realmApp?.currentUser?.id,
-      },
-    };
+      const config = {
+        schema: [PlaceSchema],
+        sync: {
+          user: realmApp?.currentUser,
+          partitionValue: realmApp?.currentUser?.id,
+        },
+      };
 
-    Realm.open(config)
-      .then((realmInstance) => {
-        realmReference.current = realmInstance;
+      Realm.open(config)
+        .then((realmInstance) => {
+          realmReference.current = realmInstance;
+          const realm = realmReference.current;
+          if (realm) {
+            setPlaces(realm.objects("Place"));
+            setStores(realm.objects("Place").filtered("type == 'Store'"));
+            setCafes(realm.objects("Place").filtered("type == 'Cafe'"));
+            setRestaurants(
+              realm.objects("Place").filtered("type == 'Restaurant'")
+            );
+            setBakery(realm.objects("Place").filtered("type == 'Bakery'"));
+            setGym(realm.objects("Place").filtered("type == 'Gym'"));
+            setOther(realm.objects("Place").filtered("type == 'Other'"));
+          }
+        })
+        .catch((err) => {
+          console.log(`an error occurred opening the realm ${err}`);
+        });
+
+      return () => {
         const realm = realmReference.current;
         if (realm) {
-          setPlaces(realm.objects("Place"));
-          setStores(realm.objects("Place").filtered("type == 'Store'"));
-          setCafes(realm.objects("Place").filtered("type == 'Cafe'"));
-          setRestaurants(
-            realm.objects("Place").filtered("type == 'Restaurant'")
-          );
-          setBakery(realm.objects("Place").filtered("type == 'Bakery'"));
-          setGym(realm.objects("Place").filtered("type == 'Gym'"));
-          setOther(realm.objects("Place").filtered("type == 'Other'"));
+          realm.close();
+          realmReference.current = null;
+          setPlaces([]);
         }
-      })
-      .catch((err) => {
-        console.log(`an error occurred opening the realm ${err}`);
-      });
-
-    return () => {
-      const realm = realmReference.current;
-      if (realm) {
-        realm.close();
-        realmReference.current = null;
-        setPlaces([]);
-      }
-    };
-  }, [realmReference]);
+      };
+    })();
+  }, [
+    realmReference,
+    setPlaces,
+    setStores,
+    setCafes,
+    setRestaurants,
+    setBakery,
+    setGym,
+    setOther,
+  ]);
 
   const createplace = (
     placeName,
