@@ -78,7 +78,6 @@ const NativeMAP = () => {
                     setShowPlace(place);
                   }}
                   id={place?._id.toString()}
-                  key={place?._id.toString()}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
                   <MapboxGL.Callout title={place?.name} />
@@ -108,7 +107,12 @@ const NativeMAP = () => {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-          <AddPlace />
+          <AddPlace
+            currentPosition={currentPosition}
+            setCurrentPosition={setCurrentPosition}
+            showPlace={showPlace}
+            setShowPlace={setShowPlace}
+          />
           {showPlace ? (
             <ShowPlace
               showPlace={showPlace}
@@ -133,10 +137,10 @@ const NativeMAP = () => {
           >
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -145,6 +149,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Stores
@@ -152,10 +157,10 @@ const NativeMAP = () => {
             </View>
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -164,6 +169,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Cafes
@@ -171,10 +177,10 @@ const NativeMAP = () => {
             </View>
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -183,6 +189,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Restaurants
@@ -190,10 +197,10 @@ const NativeMAP = () => {
             </View>
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -202,6 +209,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Bakery
@@ -209,10 +217,10 @@ const NativeMAP = () => {
             </View>
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -221,6 +229,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Gym
@@ -228,10 +237,10 @@ const NativeMAP = () => {
             </View>
             <View
               style={{
-                height: 60,
-                width: 100,
+                height: 50,
+                width: 110,
                 borderRadius: 20,
-                backgroundColor: "#131313",
+                backgroundColor: "black",
                 margin: 10,
                 justifyContent: "center",
                 alignItems: "center",
@@ -240,6 +249,7 @@ const NativeMAP = () => {
               <Text
                 style={{
                   fontSize: 16,
+                  color: "white",
                 }}
               >
                 Others

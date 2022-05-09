@@ -11,7 +11,12 @@ import gallery from "../assets/gallery.png";
 import add from "../assets/add.png";
 import camera from "../assets/camera.png";
 
-export function AddPlace() {
+export function AddPlace({
+  currentPosition,
+  setCurrentPosition,
+  showPlace,
+  setShowPlace,
+}) {
   const [placeName, setPlaceName] = useState("");
   const [placeType, setPlaceType] = useState("Store");
   const [placeLocation, setPlaceLocation] = useState([]);
@@ -323,22 +328,29 @@ export function AddPlace() {
               <Button
                 mode="contained"
                 color="black"
-                onPress={() =>
-                  (async () => {
-                    await createplace(
-                      placeName,
-                      placeLocation,
-                      placeAddress,
-                      placeType,
-                      placePhone,
-                      placeEmail,
-                      placeWebsite
-                    );
-                    setTextArray(null);
-                    setMoreInfo(false);
-                    setOverlayVisible(false);
-                  })()
-                }
+                onPress={() => {
+                  createplace(
+                    placeName,
+                    placeLocation,
+                    placeAddress,
+                    placeType,
+                    placePhone,
+                    placeEmail,
+                    placeWebsite
+                  );
+                  setCurrentPosition([placeLocation[0], placeLocation[1]]);
+                  setShowPlace({
+                    name: placeName,
+                    type: placeType,
+                    formattedAddress: placeAddress,
+                    phoneNumber: placePhone,
+                    emailAddress: placeEmail,
+                    website: placeWebsite,
+                  });
+                  setTextArray(null);
+                  setMoreInfo(false);
+                  setOverlayVisible(false);
+                }}
                 style={{
                   width: 170,
                   borderRadius: 50,
