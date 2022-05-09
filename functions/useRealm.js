@@ -24,6 +24,12 @@ const realmApp = new Realm.App({
 const useRealm = () => {
   const realmReference = useRef(null);
   const [places, setPlaces] = useState([]);
+  const [stores, setStores] = useState([]);
+  const [cafes, setCafes] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [bakery, setBakery] = useState([]);
+  const [gym, setGym] = useState([]);
+  const [other, setOther] = useState([]);
 
   useEffect(() => {
     const creds = Realm.Credentials.emailPassword("system", "password");
@@ -44,6 +50,7 @@ const useRealm = () => {
         const realm = realmReference.current;
         if (realm) {
           setPlaces(realm.objects("Place"));
+          setStores(realm.objects("Place").filtered("type == 'Store'"));
         }
       })
       .catch((err) => {
@@ -88,7 +95,8 @@ const useRealm = () => {
   };
 
   const fetchPlaces = () => places;
-  return { fetchPlaces, createplace };
+  const fetchStores = () => stores;
+  return { fetchStores, fetchPlaces, createplace };
 };
 
 export default useRealm;

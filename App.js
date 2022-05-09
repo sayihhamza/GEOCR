@@ -9,6 +9,7 @@ import {
   StatusBar,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-paper";
@@ -33,8 +34,17 @@ const NativeMAP = () => {
   const [scannedPlace, setScnnedPlace] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showPlace, setShowPlace] = useState(null);
+  const [showStores, setShowStores] = useState(false);
 
-  const { fetchPlaces } = useRealm();
+  const { fetchPlaces, fetchStores } = useRealm();
+
+  // useEffect(() => {
+  //   fetchStores() !== [] ? console.log(fetchStores()) : null;
+  // }, [fetchStores]);
+
+  // useEffect(() => {
+  //   fetchPlaces() ? console.log(fetchPlaces()) : null;
+  // }, [fetchPlaces]);
 
   useEffect(() => {
     showPlace ? console.log(showPlace) : null;
@@ -71,11 +81,12 @@ const NativeMAP = () => {
               animationMode="flyTo"
             />
 
-            {fetchPlaces() ? (
-              fetchPlaces()?.map((place) => (
+            {fetchStores() && showStores ? (
+              fetchStores()?.map((place) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
                   }}
                   id={place?._id.toString()}
                   coordinate={[place?.location[0], place?.location[1]]}
@@ -135,7 +146,8 @@ const NativeMAP = () => {
             showsHorizontalScrollIndicator={false}
             style={{ flexDirection: "row", position: "absolute", bottom: 20 }}
           >
-            <View
+            <TouchableOpacity
+              onPress={() => setShowStores(!showStores)}
               style={{
                 height: 50,
                 width: 110,
@@ -154,7 +166,7 @@ const NativeMAP = () => {
               >
                 Stores
               </Text>
-            </View>
+            </TouchableOpacity>
             <View
               style={{
                 height: 50,
