@@ -200,6 +200,11 @@ export const SearchPlace = ({
                 >
                   <View style={{ flexDirection: "row" }}>
                     <Text style={{ fontSize: 20 }}>{place.name}</Text>
+                    <Text
+                      style={{ fontSize: 20, position: "absolute", right: 2 }}
+                    >
+                      {place.type}
+                    </Text>
                   </View>
                   <Text style={{ fontSize: 12 }}>{place.formattedAddress}</Text>
                 </TouchableOpacity>
