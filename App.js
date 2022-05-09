@@ -35,8 +35,21 @@ const NativeMAP = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showPlace, setShowPlace] = useState(null);
   const [showStores, setShowStores] = useState(false);
+  const [showCafes, setShowCafes] = useState(false);
+  const [showBakery, setShowBakery] = useState(false);
+  const [showRestaurants, setShowRestaurants] = useState(false);
+  const [showGym, setShowGym] = useState(false);
+  const [showOther, setShowOther] = useState(false);
 
-  const { fetchPlaces, fetchStores } = useRealm();
+  const {
+    fetchPlaces,
+    fetchStores,
+    fetchOther,
+    fetchGym,
+    fetchBakery,
+    fetchRestaurants,
+    fetchCafes,
+  } = useRealm();
 
   // useEffect(() => {
   //   fetchStores() !== [] ? console.log(fetchStores()) : null;
@@ -83,6 +96,86 @@ const NativeMAP = () => {
 
             {fetchStores() && showStores ? (
               fetchStores()?.map((place) => (
+                <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                  }}
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+            {fetchCafes() && showCafes ? (
+              fetchCafes()?.map((place) => (
+                <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                  }}
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+            {fetchBakery() && showBakery ? (
+              fetchBakery()?.map((place) => (
+                <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                  }}
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+            {fetchRestaurants() && showRestaurants ? (
+              fetchRestaurants()?.map((place) => (
+                <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                  }}
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+            {fetchGym() && showGym ? (
+              fetchGym()?.map((place) => (
+                <MapboxGL.PointAnnotation
+                  onSelected={() => {
+                    setShowPlace(place);
+                    setCurrentPosition([place.location[0], place.location[1]]);
+                  }}
+                  id={place?._id.toString()}
+                  coordinate={[place?.location[0], place?.location[1]]}
+                >
+                  <MapboxGL.Callout title={place?.name} />
+                </MapboxGL.PointAnnotation>
+              ))
+            ) : (
+              <></>
+            )}
+            {fetchOther() && showOther ? (
+              fetchOther()?.map((place) => (
                 <MapboxGL.PointAnnotation
                   onSelected={() => {
                     setShowPlace(place);
@@ -167,7 +260,8 @@ const NativeMAP = () => {
                 Stores
               </Text>
             </TouchableOpacity>
-            <View
+            <TouchableOpacity
+              onPress={() => setShowCafes(!showCafes)}
               style={{
                 height: 50,
                 width: 110,
@@ -186,8 +280,9 @@ const NativeMAP = () => {
               >
                 Cafes
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowRestaurants(!showRestaurants)}
               style={{
                 height: 50,
                 width: 110,
@@ -206,8 +301,9 @@ const NativeMAP = () => {
               >
                 Restaurants
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowBakery(!showBakery)}
               style={{
                 height: 50,
                 width: 110,
@@ -226,8 +322,9 @@ const NativeMAP = () => {
               >
                 Bakery
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowGym(!showGym)}
               style={{
                 height: 50,
                 width: 110,
@@ -246,8 +343,9 @@ const NativeMAP = () => {
               >
                 Gym
               </Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowOther(!showOther)}
               style={{
                 height: 50,
                 width: 110,
@@ -266,7 +364,7 @@ const NativeMAP = () => {
               >
                 Others
               </Text>
-            </View>
+            </TouchableOpacity>
           </ScrollView>
         </>
       ) : (

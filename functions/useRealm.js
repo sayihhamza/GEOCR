@@ -51,6 +51,13 @@ const useRealm = () => {
         if (realm) {
           setPlaces(realm.objects("Place"));
           setStores(realm.objects("Place").filtered("type == 'Store'"));
+          setCafes(realm.objects("Place").filtered("type == 'Cafe'"));
+          setRestaurants(
+            realm.objects("Place").filtered("type == 'Restaurant'")
+          );
+          setBakery(realm.objects("Place").filtered("type == 'Bakery'"));
+          setGym(realm.objects("Place").filtered("type == 'Gym'"));
+          setOther(realm.objects("Place").filtered("type == 'Other'"));
         }
       })
       .catch((err) => {
@@ -96,7 +103,21 @@ const useRealm = () => {
 
   const fetchPlaces = () => places;
   const fetchStores = () => stores;
-  return { fetchStores, fetchPlaces, createplace };
+  const fetchCafes = () => cafes;
+  const fetchRestaurants = () => restaurants;
+  const fetchBakery = () => bakery;
+  const fetchGym = () => gym;
+  const fetchOther = () => other;
+  return {
+    fetchOther,
+    fetchGym,
+    fetchBakery,
+    fetchRestaurants,
+    fetchCafes,
+    fetchStores,
+    fetchPlaces,
+    createplace,
+  };
 };
 
 export default useRealm;
