@@ -17,10 +17,11 @@ import { Button } from "react-native-paper";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import useRealm from "./functions/useRealm";
 import GetLocation from "react-native-get-location";
+import MapboxDirectionsFactory from "@mapbox/mapbox-sdk/services/directions";
+import { lineString as makeLineString } from "@turf/helpers";
 import { SearchPlace } from "./components/SearchPlace";
 import { AddPlace } from "./components/AddPlace";
 import { ShowPlace } from "./components/ShowPlace";
-// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { IconAdd } from "./components/Icons/AddIcon.js";
 import { IconMinus } from "./components/Icons/MinusIcon";
 import { IconPlace } from "./components/Icons/PlaceIcon";
@@ -30,6 +31,16 @@ const accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
 MapboxGL.setAccessToken(accessToken);
 MapboxGL.setConnected(true);
+const directionsClient = MapboxDirectionsFactory({ accessToken });
+
+const layerStyles = {
+  routing: {
+    lineColor: "#ed5555",
+    lineCap: MapboxGL.LineJoin.Round,
+    lineWidth: 6,
+    lineOpacity: 1,
+  },
+};
 
 const Stack = createStackNavigator();
 
@@ -57,8 +68,10 @@ const NativeMAP = () => {
   const [showRestaurants, setShowRestaurants] = useState(false);
   const [showGym, setShowGym] = useState(false);
   const [showOther, setShowOther] = useState(false);
+  const [showDirections, setShowDirections] = useState(false);
+  const [routing, setRouting] = useState(null);
+  const [distance, setDistance] = useState(0);
   const [goBack, setGoBack] = useState(false);
-
   // useEffect(() => {
   //   fetchStores() !== [] ? console.log(fetchStores()) : null;
   // }, [fetchStores]);
@@ -66,6 +79,31 @@ const NativeMAP = () => {
   // useEffect(() => {
   //   fetchPlaces() ? console.log(fetchPlaces()) : null;
   // }, [fetchPlaces]);
+  useEffect(() => {
+    if (currentPosition != userPosition) {
+      const fetchRoute = async () => {
+        const reqOptions = {
+          waypoints: [
+            { coordinates: [userPosition[0], userPosition[1]] },
+            { coordinates: [currentPosition[0], currentPosition[1]] },
+          ],
+          profile: "walking",
+          geometries: "geojson",
+        };
+        const res = await directionsClient.getDirections(reqOptions).send();
+        setDistance(res.body.routes[0].distance / 1000, 4);
+        const newRoute = makeLineString(
+          res.body.routes[0].geometry.coordinates
+        );
+        setRouting(newRoute);
+      };
+      try {
+        showDirections && fetchRoute();
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  }, [currentPosition, showDirections, setShowDirections]);
 
   useEffect(() => {
     showPlace ? console.log(showPlace) : null;
@@ -217,6 +255,19 @@ const NativeMAP = () => {
             ) : (
               <></>
             )}
+            {routing && showDirections ? (
+              <MapboxGL.ShapeSource id="routeSource" shape={routing}>
+                <MapboxGL.LineLayer
+                  id="routeFill"
+                  style={layerStyles.routing}
+                />
+              </MapboxGL.ShapeSource>
+            ) : null}
+            {showDirections && routing ? (
+              <MapboxGL.PointAnnotation coordinate={currentPosition} />
+            ) : (
+              <></>
+            )}
           </MapboxGL.MapView>
           <SearchPlace
             currentPosition={currentPosition}
@@ -320,6 +371,9 @@ const NativeMAP = () => {
                 borderRadius: 10,
                 justifyContent: "center",
                 alignItems: "center",
+              }}
+              onPress={() => {
+                setShowDirections(!showDirections);
               }}
             >
               <IconDirection />
