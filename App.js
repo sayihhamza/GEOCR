@@ -20,6 +20,11 @@ import GetLocation from "react-native-get-location";
 import { SearchPlace } from "./components/SearchPlace";
 import { AddPlace } from "./components/AddPlace";
 import { ShowPlace } from "./components/ShowPlace";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { IconAdd } from "./components/Icons/AddIcon.js";
+import { IconMinus } from "./components/Icons/MinusIcon";
+import { IconPlace } from "./components/Icons/PlaceIcon";
+import { IconDirection } from "./components/Icons/DirectionIcon";
 
 const accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
@@ -40,6 +45,7 @@ const NativeMAP = () => {
     fetchCafes,
   } = useRealm();
   const [loaded, setLoaded] = useState(false);
+  const [zoomLevel, setZoomLevel] = useState(14);
   const [currentPosition, setCurrentPosition] = useState([]);
   const [userPosition, setUserPosition] = useState([]);
   const [scannedPlace, setScnnedPlace] = useState(null);
@@ -51,6 +57,7 @@ const NativeMAP = () => {
   const [showRestaurants, setShowRestaurants] = useState(false);
   const [showGym, setShowGym] = useState(false);
   const [showOther, setShowOther] = useState(false);
+  const [goBack, setGoBack] = useState(false);
 
   // useEffect(() => {
   //   fetchStores() !== [] ? console.log(fetchStores()) : null;
@@ -75,7 +82,7 @@ const NativeMAP = () => {
         const { code, message } = error;
         console.warn(code, message);
       });
-  }, []);
+  }, [goBack, setGoBack]);
 
   return (
     <SafeAreaProvider style={styles.page}>
@@ -86,12 +93,15 @@ const NativeMAP = () => {
             // styleURL={"mapbox://styles/mapbox/streets-v11"}
             styleURL={"mapbox://styles/mapbox/dark-v10"}
             style={styles.map}
+            onPress={(event) => {
+              setCurrentPosition(event.geometry.coordinates);
+            }}
           >
             <MapboxGL.UserLocation />
             <MapboxGL.Camera
               style={{ marginTop: 12 }}
               centerCoordinate={currentPosition}
-              zoomLevel={14}
+              zoomLevel={zoomLevel}
               animationMode="flyTo"
             />
 
@@ -247,7 +257,74 @@ const NativeMAP = () => {
           ) : (
             <></>
           )}
-
+          <View
+            style={{
+              flexDirection: "column",
+              position: "absolute",
+              right: 27,
+              top: 140,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                backgroundColor: "black",
+                width: 45,
+                height: 45,
+                margin: 5,
+                borderRadius: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => setZoomLevel(zoomLevel + 1)}
+            >
+              <IconAdd />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "black",
+                width: 45,
+                height: 45,
+                margin: 5,
+                borderRadius: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => setZoomLevel(zoomLevel - 1)}
+            >
+              <IconMinus />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "black",
+                width: 45,
+                height: 45,
+                margin: 5,
+                borderRadius: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                setCurrentPosition(userPosition);
+                setGoBack(!goBack);
+                setZoomLevel(14);
+              }}
+            >
+              <IconPlace />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "black",
+                width: 45,
+                height: 45,
+                margin: 5,
+                borderRadius: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <IconDirection />
+            </TouchableOpacity>
+          </View>
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
