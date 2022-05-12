@@ -18,6 +18,7 @@ import MapboxGL from "@react-native-mapbox-gl/maps";
 import useRealm from "./functions/useRealm";
 import GetLocation from "react-native-get-location";
 import MapboxDirectionsFactory from "@mapbox/mapbox-sdk/services/directions";
+import * as geolib from "geolib";
 import { lineString as makeLineString } from "@turf/helpers";
 import { SearchPlace } from "./components/SearchPlace";
 import { AddPlace } from "./components/AddPlace";
@@ -70,8 +71,15 @@ const NativeMAP = () => {
   const [showOther, setShowOther] = useState(false);
   const [showDirections, setShowDirections] = useState(false);
   const [routing, setRouting] = useState(null);
-  const [distance, setDistance] = useState(0);
   const [goBack, setGoBack] = useState(false);
+  const [distance, setDistance] = useState(0);
+  const [nearestStore, setNearestStore] = useState(null);
+  const [nearestCafe, setNearedCafe] = useState(null);
+  const [nearestRestaurant, setNearestRestaurant] = useState(null);
+  const [nearestBakery, setNearestBakery] = useState(null);
+  const [nearestGym, setNearestGym] = useState(null);
+  const [nearestOther, setNearestOther] = useState(null);
+  const [arrTest, setArrTest] = useState([]);
   // useEffect(() => {
   //   fetchStores() !== [] ? console.log(fetchStores()) : null;
   // }, [fetchStores]);
@@ -79,6 +87,34 @@ const NativeMAP = () => {
   // useEffect(() => {
   //   fetchPlaces() ? console.log(fetchPlaces()) : null;
   // }, [fetchPlaces]);
+
+  useEffect(() => {
+    fetchStores() != []
+      ? fetchStores().forEach((store) =>
+          arrTest.push({
+            latitude: store.location[0],
+            longitude: store.location[1],
+            _id: store._id,
+            emailAddress: store.emailAddress,
+            formattedAddress: store.formattedAddress,
+            location: store.location,
+            name: store.name,
+            phoneNumber: store.phoneNumber,
+            type: store.type,
+            website: store.website,
+          })
+        )
+      : null;
+    arrTest != []
+      ? setNearedCafe(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            arrTest
+          )
+        )
+      : null;
+  }, [fetchStores]);
+
   useEffect(() => {
     if (currentPosition != userPosition) {
       const fetchRoute = async () => {
@@ -385,7 +421,19 @@ const NativeMAP = () => {
             style={{ flexDirection: "row", position: "absolute", bottom: 20 }}
           >
             <TouchableOpacity
-              onPress={() => setShowStores(!showStores)}
+              onPress={() => {
+                setShowStores(!showStores);
+                if (!showStores) {
+                  setShowPlace(nearestCafe);
+                  nearestCafe.location != []
+                    ? setCurrentPosition([
+                        nearestCafe.location[0],
+                        nearestCafe.location[1],
+                      ])
+                    : null;
+                }
+                !showStores ? setShowPlace(nearestCafe) : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,
@@ -521,8 +569,8 @@ const NativeMAP = () => {
 
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
-  const [email, setEmail] = useState("FUCKING");
-  const [password, setPassword] = useState("FUCKING");
+  const [email, setEmail] = useState("system");
+  const [password, setPassword] = useState("system");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -564,6 +612,7 @@ const Welcome = ({ navigation }) => {
             padding: 10,
             borderRadius: 15,
             width: 300,
+            height: 45,
           }}
           autoCapitalize="none"
         />
@@ -580,6 +629,7 @@ const Welcome = ({ navigation }) => {
             padding: 10,
             borderRadius: 15,
             width: 300,
+            height: 45,
           }}
           secureTextEntry
         />
@@ -594,13 +644,17 @@ const Welcome = ({ navigation }) => {
             setMessage("email or password is short");
           }
         }}
+        contentStyle={{
+          width: 300,
+          justifyContent: "center",
+        }}
         style={{
           margin: 5,
           width: 300,
-          borderRadius: 15,
           alignItems: "center",
+          height: 40,
+          borderRadius: 15,
         }}
-        contentStyle={{ justifyContent: "flex-start" }}
       >
         SING IN
       </Button>
@@ -614,13 +668,17 @@ const Welcome = ({ navigation }) => {
             setMessage("email or password is short");
           }
         }}
+        contentStyle={{
+          width: 300,
+          justifyContent: "center",
+        }}
         style={{
           margin: 5,
           width: 300,
-          borderRadius: 15,
           alignItems: "center",
+          height: 40,
+          borderRadius: 15,
         }}
-        contentStyle={{ justifyContent: "flex-start" }}
       >
         <Text>SING UP</Text>
       </Button>
