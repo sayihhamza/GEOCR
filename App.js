@@ -74,24 +74,23 @@ const NativeMAP = () => {
   const [goBack, setGoBack] = useState(false);
   const [distance, setDistance] = useState(0);
   const [nearestStore, setNearestStore] = useState(null);
-  const [nearestCafe, setNearedCafe] = useState(null);
+  const [nearestCafe, setNearestCafe] = useState(null);
   const [nearestRestaurant, setNearestRestaurant] = useState(null);
   const [nearestBakery, setNearestBakery] = useState(null);
   const [nearestGym, setNearestGym] = useState(null);
   const [nearestOther, setNearestOther] = useState(null);
-  const [arrTest, setArrTest] = useState([]);
-  // useEffect(() => {
-  //   fetchStores() !== [] ? console.log(fetchStores()) : null;
-  // }, [fetchStores]);
-
-  // useEffect(() => {
-  //   fetchPlaces() ? console.log(fetchPlaces()) : null;
-  // }, [fetchPlaces]);
+  const [storesArray, setStoresArray] = useState([]);
+  const [cafesArray, setCafesArray] = useState([]);
+  const [restaurantsArray, setRestaurantsArray] = useState([]);
+  const [bakeryArray, setBakeryArray] = useState([]);
+  const [gymArray, setGymArray] = useState([]);
+  const [otherArray, setOtherArray] = useState([]);
 
   useEffect(() => {
-    fetchStores() != []
-      ? fetchStores().forEach((store) =>
-          arrTest.push({
+    const findNearestStore = () => {
+      if (fetchStores() != []) {
+        fetchStores().forEach((store) =>
+          storesArray.push({
             latitude: store.location[0],
             longitude: store.location[1],
             _id: store._id,
@@ -103,17 +102,154 @@ const NativeMAP = () => {
             type: store.type,
             website: store.website,
           })
-        )
-      : null;
-    arrTest != []
-      ? setNearedCafe(
+        );
+      }
+      if (storesArray != []) {
+        setNearestStore(
           geolib.findNearest(
             { latitude: userPosition[0], longitude: userPosition[1] },
-            arrTest
+            storesArray
           )
-        )
-      : null;
-  }, [fetchStores]);
+        );
+      }
+    };
+    const findNearestCafe = () => {
+      if (fetchCafes() != []) {
+        fetchCafes().forEach((cafe) =>
+          cafesArray.push({
+            latitude: cafe.location[0],
+            longitude: cafe.location[1],
+            _id: cafe._id,
+            emailAddress: cafe.emailAddress,
+            formattedAddress: cafe.formattedAddress,
+            location: cafe.location,
+            name: cafe.name,
+            phoneNumber: cafe.phoneNumber,
+            type: cafe.type,
+            website: cafe.website,
+          })
+        );
+      }
+      if (cafesArray != []) {
+        setNearestCafe(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            cafesArray
+          )
+        );
+      }
+    };
+    const findNearestRestaurant = () => {
+      if (fetchRestaurants() != []) {
+        fetchRestaurants().forEach((cafe) =>
+          restaurantsArray.push({
+            latitude: cafe.location[0],
+            longitude: cafe.location[1],
+            _id: cafe._id,
+            emailAddress: cafe.emailAddress,
+            formattedAddress: cafe.formattedAddress,
+            location: cafe.location,
+            name: cafe.name,
+            phoneNumber: cafe.phoneNumber,
+            type: cafe.type,
+            website: cafe.website,
+          })
+        );
+      }
+      if (restaurantsArray != []) {
+        setNearestRestaurant(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            restaurantsArray
+          )
+        );
+      }
+    };
+    const findNearestBakery = () => {
+      if (fetchBakery() != []) {
+        fetchBakery().forEach((cafe) =>
+          bakeryArray.push({
+            latitude: cafe.location[0],
+            longitude: cafe.location[1],
+            _id: cafe._id,
+            emailAddress: cafe.emailAddress,
+            formattedAddress: cafe.formattedAddress,
+            location: cafe.location,
+            name: cafe.name,
+            phoneNumber: cafe.phoneNumber,
+            type: cafe.type,
+            website: cafe.website,
+          })
+        );
+      }
+      if (bakeryArray != []) {
+        setNearestBakery(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            bakeryArray
+          )
+        );
+      }
+    };
+    const findNearestGym = () => {
+      if (fetchGym() != []) {
+        fetchGym().forEach((cafe) =>
+          gymArray.push({
+            latitude: cafe.location[0],
+            longitude: cafe.location[1],
+            _id: cafe._id,
+            emailAddress: cafe.emailAddress,
+            formattedAddress: cafe.formattedAddress,
+            location: cafe.location,
+            name: cafe.name,
+            phoneNumber: cafe.phoneNumber,
+            type: cafe.type,
+            website: cafe.website,
+          })
+        );
+      }
+      if (gymArray != []) {
+        setNearestGym(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            gymArray
+          )
+        );
+      }
+    };
+    const findNearestOther = () => {
+      if (fetchOther() != []) {
+        fetchOther().forEach((cafe) =>
+          otherArray.push({
+            latitude: cafe.location[0],
+            longitude: cafe.location[1],
+            _id: cafe._id,
+            emailAddress: cafe.emailAddress,
+            formattedAddress: cafe.formattedAddress,
+            location: cafe.location,
+            name: cafe.name,
+            phoneNumber: cafe.phoneNumber,
+            type: cafe.type,
+            website: cafe.website,
+          })
+        );
+      }
+      if (otherArray != []) {
+        setNearestOther(
+          geolib.findNearest(
+            { latitude: userPosition[0], longitude: userPosition[1] },
+            otherArray
+          )
+        );
+      }
+    };
+    findNearestStore();
+    findNearestCafe();
+    findNearestRestaurant();
+    findNearestBakery();
+    findNearestGym();
+    findNearestOther();
+  }, [fetchStores, fetchCafes]);
 
   useEffect(() => {
     if (currentPosition != userPosition) {
@@ -394,6 +530,7 @@ const NativeMAP = () => {
                 setCurrentPosition(userPosition);
                 setGoBack(!goBack);
                 setZoomLevel(14);
+                setShowPlace(null);
               }}
             >
               <IconPlace />
@@ -424,15 +561,15 @@ const NativeMAP = () => {
               onPress={() => {
                 setShowStores(!showStores);
                 if (!showStores) {
-                  setShowPlace(nearestCafe);
-                  nearestCafe.location != []
+                  setShowPlace(nearestStore);
+                  nearestStore.location != []
                     ? setCurrentPosition([
-                        nearestCafe.location[0],
-                        nearestCafe.location[1],
+                        nearestStore.location[0],
+                        nearestStore.location[1],
                       ])
                     : null;
                 }
-                !showStores ? setShowPlace(nearestCafe) : setShowPlace(null);
+                !showStores ? setShowPlace(nearestStore) : setShowPlace(null);
               }}
               style={{
                 height: 50,
@@ -454,7 +591,19 @@ const NativeMAP = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setShowCafes(!showCafes)}
+              onPress={() => {
+                setShowCafes(!showCafes);
+                if (!showCafes) {
+                  setShowPlace(nearestCafe);
+                  nearestCafe.location != []
+                    ? setCurrentPosition([
+                        nearestCafe.location[0],
+                        nearestCafe.location[1],
+                      ])
+                    : null;
+                }
+                !showCafes ? setShowPlace(nearestCafe) : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,
@@ -475,7 +624,22 @@ const NativeMAP = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setShowRestaurants(!showRestaurants)}
+              onPress={() => {
+                setShowRestaurants(!showRestaurants);
+                if (!showRestaurants) {
+                  setShowPlace(nearestRestaurant);
+                  nearestRestaurant.location != []
+                    ? setCurrentPosition([
+                        nearestRestaurant.location[0],
+                        nearestRestaurant.location[1],
+                      ])
+                    : null;
+                  setShowPlace(nearestRestaurant);
+                }
+                !showRestaurants
+                  ? setShowPlace(nearestRestaurant)
+                  : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,
@@ -496,7 +660,20 @@ const NativeMAP = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setShowBakery(!showBakery)}
+              onPress={() => {
+                setShowBakery(!showBakery);
+                if (!showBakery) {
+                  setShowPlace(nearestBakery);
+                  nearestBakery.location != []
+                    ? setCurrentPosition([
+                        nearestBakery.location[0],
+                        nearestBakery.location[1],
+                      ])
+                    : null;
+                  setShowPlace(nearestBakery);
+                }
+                !showBakery ? setShowPlace(nearestBakery) : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,
@@ -517,7 +694,20 @@ const NativeMAP = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setShowGym(!showGym)}
+              onPress={() => {
+                setShowGym(!showGym);
+                if (!showGym) {
+                  setShowPlace(nearestGym);
+                  nearestGym.location != []
+                    ? setCurrentPosition([
+                        nearestGym.location[0],
+                        nearestGym.location[1],
+                      ])
+                    : null;
+                  setShowPlace(nearestGym);
+                }
+                !showGym ? setShowPlace(nearestGym) : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,
@@ -538,7 +728,20 @@ const NativeMAP = () => {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setShowOther(!showOther)}
+              onPress={() => {
+                setShowOther(!showOther);
+                if (!showOther) {
+                  setShowPlace(nearestOther);
+                  nearestOther.location != []
+                    ? setCurrentPosition([
+                        nearestOther.location[0],
+                        nearestOther.location[1],
+                      ])
+                    : null;
+                  setShowPlace(nearestOther);
+                }
+                !showOther ? setShowPlace(nearestOther) : setShowPlace(null);
+              }}
               style={{
                 height: 50,
                 width: 110,

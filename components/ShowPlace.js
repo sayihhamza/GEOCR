@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export const ShowPlace = ({
   showPlace,
@@ -93,8 +94,10 @@ export const ShowPlace = ({
       </Text>
       <Button
         mode="contained"
-        color="white"
+        disabled={true}
+        color="transparent"
         style={{
+          opacity: 0.5,
           width: 350,
           position: "absolute",
           bottom: 0,
@@ -109,7 +112,8 @@ export const ShowPlace = ({
           setCurrentPosition(userPosition);
         }}
       >
-        clear
+        <Icon name="remove" size={18} color="white" />
+        <Text style={{ color: "white" }}> DELETE</Text>
       </Button>
     </View>
   );
