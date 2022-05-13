@@ -315,7 +315,7 @@ const NativeMAP = () => {
           >
             <MapboxGL.UserLocation />
             <MapboxGL.Camera
-              style={{ marginTop: 12 }}
+              style={styles.map}
               centerCoordinate={currentPosition}
               zoomLevel={zoomLevel}
               animationMode="flyTo"
@@ -802,8 +802,8 @@ const NativeMAP = () => {
 
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
-  const [email, setEmail] = useState("system");
-  const [password, setPassword] = useState("system");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -825,7 +825,17 @@ const Welcome = ({ navigation }) => {
     >
       <Text
         style={{
-          fontSize: 40,
+          fontSize: 25,
+
+          marginBottom: 15,
+          color: "grey",
+        }}
+      >
+        WELCOME TO
+      </Text>
+      <Text
+        style={{
+          fontSize: 50,
           fontWeight: "bold",
           marginBottom: 40,
           color: "white",
@@ -840,29 +850,32 @@ const Welcome = ({ navigation }) => {
           placeholder="email"
           style={{
             borderColor: "white",
-            borderWidth: 1,
+            borderWidth: 2,
             margin: 5,
             padding: 10,
             borderRadius: 15,
             width: 300,
             height: 45,
+            fontSize: 15,
+            fontWeight: "bold",
           }}
-          autoCapitalize="none"
         />
       </View>
-      <View style={{ padding: 5, marginBottom: 50 }}>
+      <View style={{ padding: 5, marginBottom: 30 }}>
         <TextInput
           onChangeText={(text) => setPassword(text)}
           value={password}
           placeholder="password"
           style={{
             borderColor: "white",
-            borderWidth: 1,
+            borderWidth: 2,
             margin: 5,
             padding: 10,
             borderRadius: 15,
             width: 300,
             height: 45,
+            fontSize: 15,
+            fontWeight: "bold",
           }}
           secureTextEntry
         />
@@ -874,7 +887,7 @@ const Welcome = ({ navigation }) => {
           if (email.length > 5 && password.length > 5) {
             navigation.navigate("App View");
           } else {
-            setMessage("email or password is short");
+            setMessage("email or password is short or invalid");
           }
         }}
         contentStyle={{
@@ -889,7 +902,7 @@ const Welcome = ({ navigation }) => {
           borderRadius: 15,
         }}
       >
-        SING IN
+        <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING IN</Text>
       </Button>
       <Button
         mode="contained"
@@ -898,7 +911,7 @@ const Welcome = ({ navigation }) => {
           if (email.length > 5 && password.length > 5) {
             navigation.navigate("App View");
           } else {
-            setMessage("email or password is short");
+            setMessage("email or password is short or invalid");
           }
         }}
         contentStyle={{
@@ -913,7 +926,7 @@ const Welcome = ({ navigation }) => {
           borderRadius: 15,
         }}
       >
-        <Text>SING UP</Text>
+        <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING UP</Text>
       </Button>
       <Text>{message}</Text>
     </View>
@@ -948,8 +961,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
+    position: "absolute",
+    height: "100%",
+    width: "100%",
   },
   map: {
+    flex: 1,
+    position: "absolute",
     height: "100%",
     width: "100%",
   },
