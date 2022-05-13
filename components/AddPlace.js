@@ -239,9 +239,7 @@ export function AddPlace({
                     margin: 4,
                   }}
                 >
-                  <Text style={{ color: "white" }}>
-                    Want to add more infos ?
-                  </Text>
+                  <Text style={{ color: "white" }}>MODIFY OR ADD INFOS ??</Text>
                 </Button>
               </>
             ) : (
