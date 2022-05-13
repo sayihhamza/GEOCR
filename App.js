@@ -332,7 +332,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconStore />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
@@ -349,7 +355,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconCafe />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
@@ -366,7 +378,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconBakery />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
@@ -383,7 +401,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconRestaurant />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
@@ -400,7 +424,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconGym />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
@@ -417,7 +447,13 @@ const NativeMAP = () => {
                   key={index}
                   coordinate={[place?.location[0], place?.location[1]]}
                 >
-                  <MapboxGL.Callout title={place?.name} />
+                  <View
+                    style={{
+                      borderRadius: 50,
+                    }}
+                  >
+                    <IconOther />
+                  </View>
                 </MapboxGL.PointAnnotation>
               ))
             ) : (
