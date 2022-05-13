@@ -33,6 +33,7 @@ import { IconRestaurant } from "./components/Icons/RestaurantIcon";
 import { IconBakery } from "./components/Icons/BakeryIcon";
 import { IconGym } from "./components/Icons/GymIcon";
 import { IconOther } from "./components/Icons/OtherIcon";
+import { IconDarkLight } from "./components/Icons/DarkLightIcon";
 
 const accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
@@ -91,6 +92,9 @@ const NativeMAP = () => {
   const [bakeryArray, setBakeryArray] = useState([]);
   const [gymArray, setGymArray] = useState([]);
   const [otherArray, setOtherArray] = useState([]);
+  const [mapStyleURL, setMapStyleURL] = useState(
+    "mapbox://styles/mapbox/dark-v10"
+  );
 
   useEffect(() => {
     const findNearestStore = () => {
@@ -307,7 +311,7 @@ const NativeMAP = () => {
         <>
           <MapboxGL.MapView
             // styleURL={"mapbox://styles/mapbox/streets-v11"}
-            styleURL={"mapbox://styles/mapbox/dark-v10"}
+            styleURL={mapStyleURL}
             style={styles.map}
             onPress={(event) => {
               setCurrentPosition(event.geometry.coordinates);
@@ -592,6 +596,24 @@ const NativeMAP = () => {
               }}
             >
               <IconDirection />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "black",
+                width: 45,
+                height: 45,
+                margin: 5,
+                borderRadius: 10,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                mapStyleURL != "mapbox://styles/mapbox/outdoors-v11"
+                  ? setMapStyleURL("mapbox://styles/mapbox/outdoors-v11")
+                  : setMapStyleURL("mapbox://styles/mapbox/dark-v10");
+              }}
+            >
+              <IconDarkLight />
             </TouchableOpacity>
           </View>
           <ScrollView
