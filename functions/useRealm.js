@@ -55,7 +55,7 @@ const useRealm = () => {
               realm.objects("Place").filtered("type == 'Restaurant'")
             );
             setBakery(realm.objects("Place").filtered("type == 'Bakery'"));
-            setGym(realm.objects("Place").filtered("type == 'Gym'"));
+            setGym(realm.objects("Place").filtered("type == 'Sports'"));
             setOther(realm.objects("Place").filtered("type == 'Other'"));
           }
         })

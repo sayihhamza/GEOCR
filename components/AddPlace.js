@@ -223,7 +223,7 @@ export function AddPlace({
                 <Picker.Item label="Cafe" value="Cafe" />
                 <Picker.Item label="Restaurant" value="Restaurant" />
                 <Picker.Item label="Bakery" value="Bakery" />
-                <Picker.Item label="Gym" value="Gym" />
+                <Picker.Item label="Sports" value="Sports" />
 
                 <Picker.Item label="Other " value="Other" />
               </Picker>

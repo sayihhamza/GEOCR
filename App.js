@@ -778,7 +778,7 @@ const NativeMAP = () => {
                   margin: 10,
                 }}
               >
-                Gym
+                Sports
               </Button>
             </TouchableOpacity>
             <TouchableOpacity
@@ -906,10 +906,15 @@ const Welcome = ({ navigation }) => {
         mode="contained"
         color="white"
         onPress={() => {
-          if (email.length > 5 && password.length > 5) {
+          if (
+            email.length > 5 &&
+            password.length > 5 &&
+            (email.toLocaleLowerCase() == "sayihhamza" ||
+              email.toLocaleUpperCase() == "esslimanioumaima")
+          ) {
             navigation.navigate("App View");
           } else {
-            setMessage("email or password is short or invalid");
+            setMessage("email or password is invalid or short");
           }
         }}
         contentStyle={{
