@@ -27,6 +27,12 @@ import { IconAdd } from "./components/Icons/AddIcon.js";
 import { IconMinus } from "./components/Icons/MinusIcon";
 import { IconPlace } from "./components/Icons/PlaceIcon";
 import { IconDirection } from "./components/Icons/DirectionIcon";
+import { IconStore } from "./components/Icons/StoreIcon";
+import { IconCafe } from "./components/Icons/CafeIcon";
+import { IconRestaurant } from "./components/Icons/RestaurantIcon";
+import { IconBakery } from "./components/Icons/BakeryIcon";
+import { IconGym } from "./components/Icons/GymIcon";
+import { IconOther } from "./components/Icons/OtherIcon";
 
 const accessToken =
   "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA";
@@ -141,18 +147,18 @@ const NativeMAP = () => {
     };
     const findNearestRestaurant = () => {
       if (fetchRestaurants() != []) {
-        fetchRestaurants().forEach((cafe) =>
+        fetchRestaurants().forEach((restaurant) =>
           restaurantsArray.push({
-            latitude: cafe.location[0],
-            longitude: cafe.location[1],
-            _id: cafe._id,
-            emailAddress: cafe.emailAddress,
-            formattedAddress: cafe.formattedAddress,
-            location: cafe.location,
-            name: cafe.name,
-            phoneNumber: cafe.phoneNumber,
-            type: cafe.type,
-            website: cafe.website,
+            latitude: restaurant.location[0],
+            longitude: restaurant.location[1],
+            _id: restaurant._id,
+            emailAddress: restaurant.emailAddress,
+            formattedAddress: restaurant.formattedAddress,
+            location: restaurant.location,
+            name: restaurant.name,
+            phoneNumber: restaurant.phoneNumber,
+            type: restaurant.type,
+            website: restaurant.website,
           })
         );
       }
@@ -167,18 +173,18 @@ const NativeMAP = () => {
     };
     const findNearestBakery = () => {
       if (fetchBakery() != []) {
-        fetchBakery().forEach((cafe) =>
+        fetchBakery().forEach((bakery) =>
           bakeryArray.push({
-            latitude: cafe.location[0],
-            longitude: cafe.location[1],
-            _id: cafe._id,
-            emailAddress: cafe.emailAddress,
-            formattedAddress: cafe.formattedAddress,
-            location: cafe.location,
-            name: cafe.name,
-            phoneNumber: cafe.phoneNumber,
-            type: cafe.type,
-            website: cafe.website,
+            latitude: bakery.location[0],
+            longitude: bakery.location[1],
+            _id: bakery._id,
+            emailAddress: bakery.emailAddress,
+            formattedAddress: bakery.formattedAddress,
+            location: bakery.location,
+            name: bakery.name,
+            phoneNumber: bakery.phoneNumber,
+            type: bakery.type,
+            website: bakery.website,
           })
         );
       }
@@ -193,18 +199,18 @@ const NativeMAP = () => {
     };
     const findNearestGym = () => {
       if (fetchGym() != []) {
-        fetchGym().forEach((cafe) =>
+        fetchGym().forEach((gym) =>
           gymArray.push({
-            latitude: cafe.location[0],
-            longitude: cafe.location[1],
-            _id: cafe._id,
-            emailAddress: cafe.emailAddress,
-            formattedAddress: cafe.formattedAddress,
-            location: cafe.location,
-            name: cafe.name,
-            phoneNumber: cafe.phoneNumber,
-            type: cafe.type,
-            website: cafe.website,
+            latitude: gym.location[0],
+            longitude: gym.location[1],
+            _id: gym._id,
+            emailAddress: gym.emailAddress,
+            formattedAddress: gym.formattedAddress,
+            location: gym.location,
+            name: gym.name,
+            phoneNumber: gym.phoneNumber,
+            type: gym.type,
+            website: gym.website,
           })
         );
       }
@@ -219,18 +225,18 @@ const NativeMAP = () => {
     };
     const findNearestOther = () => {
       if (fetchOther() != []) {
-        fetchOther().forEach((cafe) =>
+        fetchOther().forEach((other) =>
           otherArray.push({
-            latitude: cafe.location[0],
-            longitude: cafe.location[1],
-            _id: cafe._id,
-            emailAddress: cafe.emailAddress,
-            formattedAddress: cafe.formattedAddress,
-            location: cafe.location,
-            name: cafe.name,
-            phoneNumber: cafe.phoneNumber,
-            type: cafe.type,
-            website: cafe.website,
+            latitude: other.location[0],
+            longitude: other.location[1],
+            _id: other._id,
+            emailAddress: other.emailAddress,
+            formattedAddress: other.formattedAddress,
+            location: other.location,
+            name: other.name,
+            phoneNumber: other.phoneNumber,
+            type: other.type,
+            website: other.website,
           })
         );
       }
@@ -571,24 +577,22 @@ const NativeMAP = () => {
                 }
                 !showStores ? setShowPlace(nearestStore) : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconStore}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Stores
-              </Text>
+              </Button>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -604,24 +608,22 @@ const NativeMAP = () => {
                 }
                 !showCafes ? setShowPlace(nearestCafe) : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconCafe}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Cafes
-              </Text>
+              </Button>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -640,24 +642,22 @@ const NativeMAP = () => {
                   ? setShowPlace(nearestRestaurant)
                   : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconRestaurant}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Restaurants
-              </Text>
+              </Button>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -674,24 +674,22 @@ const NativeMAP = () => {
                 }
                 !showBakery ? setShowPlace(nearestBakery) : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconBakery}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Bakery
-              </Text>
+              </Button>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -708,24 +706,22 @@ const NativeMAP = () => {
                 }
                 !showGym ? setShowPlace(nearestGym) : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconGym}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Gym
-              </Text>
+              </Button>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
@@ -742,24 +738,22 @@ const NativeMAP = () => {
                 }
                 !showOther ? setShowPlace(nearestOther) : setShowPlace(null);
               }}
-              style={{
-                height: 50,
-                width: 110,
-                borderRadius: 20,
-                backgroundColor: "black",
-                margin: 10,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
             >
-              <Text
+              <Button
+                icon={IconOther}
+                mode="contained"
+                color="black"
                 style={{
-                  fontSize: 16,
-                  color: "white",
+                  height: 40,
+                  borderRadius: 20,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: 50,
+                  margin: 10,
                 }}
               >
                 Others
-              </Text>
+              </Button>
             </TouchableOpacity>
           </ScrollView>
         </>

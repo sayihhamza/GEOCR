@@ -22,7 +22,7 @@ export const ShowPlace = ({
         bottom: 100,
         backgroundColor: "black",
         borderRadius: 20,
-        height: 190,
+        height: 150,
         width: 350,
         padding: 10,
         opacity: 0.7,
@@ -92,29 +92,6 @@ export const ShowPlace = ({
       >
         {showPlace?.website}
       </Text>
-      <Button
-        mode="contained"
-        disabled={true}
-        color="transparent"
-        style={{
-          opacity: 0.5,
-          width: 350,
-          position: "absolute",
-          bottom: 0,
-          height: 40,
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
-        }}
-        onPress={() => {
-          setShowPlace(null);
-          setSearchQuery("");
-          setScnnedPlace(null);
-          setCurrentPosition(userPosition);
-        }}
-      >
-        <Icon name="remove" size={18} color="white" />
-        <Text style={{ color: "white" }}> DELETE</Text>
-      </Button>
     </View>
   );
 };

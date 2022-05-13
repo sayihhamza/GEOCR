@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Searchbar, Button } from "react-native-paper";
 import { Overlay } from "@rneui/themed";
 import Geocoder from "@timwangdev/react-native-geocoder";
-import camera from "../assets/camera.png";
-import gallery from "../assets/gallery.png";
+import { IconCamera } from "./Icons/CameraIcon";
+import { IconGallery } from "./Icons/GalleryIcon";
 import useRealm from "../functions/useRealm";
 import useMLkit from "../functions/useMLkit";
 
@@ -31,7 +31,7 @@ const OverlayExample = ({ visible, setVisible, setTextArray }) => {
         <Button
           mode="contained"
           color="#1F1F1F"
-          icon={camera}
+          icon={IconCamera}
           onPress={() => {
             (async () => {
               await recognizeFromCamera(setTextArray);
@@ -48,7 +48,7 @@ const OverlayExample = ({ visible, setVisible, setTextArray }) => {
         <Button
           mode="contained"
           color="#1F1F1F"
-          icon={gallery}
+          icon={IconGallery}
           onPress={() => {
             (async () => {
               await recognizeFromPicker(setTextArray);
@@ -152,7 +152,7 @@ export const SearchPlace = ({
         placeholder="Search place"
         onChangeText={onChangeSearch}
         value={searchQuery}
-        icon={camera}
+        icon={IconCamera}
         iconColor="white"
         onIconPress={() => setVisible(true)}
         theme={{
