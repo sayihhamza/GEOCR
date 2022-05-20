@@ -35,6 +35,7 @@ export function AddPlace({
   const [placeEmail, setPlaceEmail] = useState("");
   const [placeWebsite, setPlaceWebsite] = useState("");
   // const [currentLocation, setCurrentLocation] = useState([]);
+  const [description, setDescription] = useState("Product type");
   const [scannedLocation, setScannedLocation] = useState(null);
   const [scannedAddress, setScannedAddress] = useState(null);
   const [overlayVisible, setOverlayVisible] = useState(false);
@@ -112,9 +113,21 @@ export function AddPlace({
       : setPlaceLocation(userPosition);
   }, [scannedLocation]);
 
-  // useEffect(() => {
-  //   user !== [] ? setPlaceLocation(currentLocation) : null;
-  // }, [currentLocation]);
+  useEffect(() => {
+    if (placeType == "Store") {
+      setDescription("Products");
+    } else if (placeType == "Cafe") {
+      setDescription("Services");
+    } else if (placeType == "Restaurant") {
+      setDescription("Services");
+    } else if (placeType == "Bakery") {
+      setDescription("Breads");
+    } else if (placeType == "Sports") {
+      setDescription("Activities");
+    } else if (placeType == "Other") {
+      setDescription("Description");
+    }
+  }, [placeType]);
 
   useEffect(() => {
     (async () => {
@@ -278,6 +291,16 @@ export function AddPlace({
                   onChangeText={setPlaceWebsite}
                   defaultValue={placeWebsite ? placeWebsite : null}
                   placeholder="Website"
+                  containerStyle={{ width: 350 }}
+                  style={{
+                    color: "white",
+                  }}
+                  autoFocus={true}
+                />
+                <Input
+                  onChangeText={setDescription}
+                  // defaultValue={description ? description : null}
+                  placeholder={description}
                   containerStyle={{ width: 350 }}
                   style={{
                     color: "white",

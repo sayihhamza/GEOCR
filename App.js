@@ -824,8 +824,11 @@ const NativeMAP = () => {
 
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isSingUp, setIsSingUP] = useState(false);
+  const [username, setUsername] = useState("sayihhamza");
+  const [email, setEmail] = useState("sayihhamza@gmail.com");
+  const [password, setPassword] = useState("Sayihhamza");
+  const [confirmPassword, setConfirmPassword] = useState("Sayihhamza");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -836,6 +839,7 @@ const Welcome = ({ navigation }) => {
       ? setMessage("password is short")
       : setMessage("");
   }, [email, password]);
+
   return (
     <View
       style={{
@@ -848,7 +852,6 @@ const Welcome = ({ navigation }) => {
       <Text
         style={{
           fontSize: 25,
-
           marginBottom: 15,
           color: "grey",
         }}
@@ -863,99 +866,216 @@ const Welcome = ({ navigation }) => {
           color: "white",
         }}
       >
-        Native MAP
+        GEO OCR
       </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          onChangeText={setEmail}
-          value={email}
-          placeholder="email"
-          style={{
-            borderColor: "white",
-            borderWidth: 2,
-            margin: 5,
-            padding: 10,
-            borderRadius: 15,
-            width: 300,
-            height: 45,
-            fontSize: 15,
-            fontWeight: "bold",
-          }}
-        />
-      </View>
-      <View style={{ padding: 5, marginBottom: 30 }}>
-        <TextInput
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-          placeholder="password"
-          style={{
-            borderColor: "white",
-            borderWidth: 2,
-            margin: 5,
-            padding: 10,
-            borderRadius: 15,
-            width: 300,
-            height: 45,
-            fontSize: 15,
-            fontWeight: "bold",
-          }}
-          secureTextEntry
-        />
-      </View>
-      <Button
-        mode="contained"
-        color="white"
-        onPress={() => {
-          if (
-            email.length > 5 &&
-            password.length > 5 &&
-            (email.toLocaleLowerCase() == "sayihhamza" ||
-              email.toLocaleUpperCase() == "esslimanioumaima")
-          ) {
-            navigation.navigate("App View");
-          } else {
-            setMessage("email or password is invalid or short");
-          }
-        }}
-        contentStyle={{
-          width: 300,
-          justifyContent: "center",
-        }}
-        style={{
-          margin: 5,
-          width: 300,
-          alignItems: "center",
-          height: 40,
-          borderRadius: 15,
-        }}
-      >
-        <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING IN</Text>
-      </Button>
-      <Button
-        mode="contained"
-        color="white"
-        onPress={() => {
-          if (email.length > 5 && password.length > 5) {
-            navigation.navigate("App View");
-          } else {
-            setMessage("email or password is short or invalid");
-          }
-        }}
-        contentStyle={{
-          width: 300,
-          justifyContent: "center",
-        }}
-        style={{
-          margin: 5,
-          width: 300,
-          alignItems: "center",
-          height: 40,
-          borderRadius: 15,
-        }}
-      >
-        <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING UP</Text>
-      </Button>
-      <Text>{message}</Text>
+      {isSingUp ? (
+        <>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={setUsername}
+              value={username}
+              placeholder="username"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={setEmail}
+              value={email}
+              placeholder="email"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+          <View style={{ padding: 5 }}>
+            <TextInput
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              placeholder="password"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+              secureTextEntry
+            />
+          </View>
+          <View style={{ padding: 5, marginBottom: 30 }}>
+            <TextInput
+              onChangeText={(text) => setConfirmPassword(text)}
+              value={confirmPassword}
+              placeholder="Confirm passwrod"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+              secureTextEntry
+            />
+          </View>
+          <Button
+            mode="contained"
+            color="white"
+            onPress={() => {
+              if (email.length > 5 && password.length > 5) {
+                navigation.navigate("App View");
+              } else {
+                setMessage("email or password is short or invalid");
+              }
+            }}
+            contentStyle={{
+              width: 300,
+              justifyContent: "center",
+            }}
+            style={{
+              margin: 5,
+              width: 300,
+              alignItems: "center",
+              height: 40,
+              borderRadius: 15,
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING UP</Text>
+          </Button>
+          <Button
+            mode="contained"
+            color="black"
+            contentStyle={{
+              width: 300,
+              justifyContent: "center",
+            }}
+            style={{
+              margin: 5,
+              width: 300,
+              alignItems: "center",
+              height: 40,
+              borderRadius: 15,
+            }}
+            onPress={() => setIsSingUP(false)}
+          >
+            WANT TO SING IN ?
+          </Button>
+          <Text>{message}</Text>
+        </>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={setEmail}
+              value={email}
+              placeholder="email"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+            />
+          </View>
+          <View style={{ padding: 5, marginBottom: 30 }}>
+            <TextInput
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              placeholder="password"
+              style={{
+                borderColor: "white",
+                borderWidth: 2,
+                margin: 5,
+                padding: 10,
+                borderRadius: 15,
+                width: 300,
+                height: 45,
+                fontSize: 15,
+                fontWeight: "bold",
+              }}
+              secureTextEntry
+            />
+          </View>
+          <Button
+            mode="contained"
+            color="white"
+            onPress={() => {
+              if (
+                email.length > 5 &&
+                password.length > 5 &&
+                email.toLocaleLowerCase() == "sayihhamza@gmail.com"
+              ) {
+                navigation.navigate("App View");
+              } else {
+                setMessage("email or password is invalid or short");
+              }
+            }}
+            contentStyle={{
+              width: 300,
+              justifyContent: "center",
+            }}
+            style={{
+              margin: 5,
+              width: 300,
+              alignItems: "center",
+              height: 40,
+              borderRadius: 15,
+            }}
+          >
+            <Text style={{ fontSize: 15, fontWeight: "bold" }}>SING IN</Text>
+          </Button>
+          <Button
+            mode="contained"
+            color="black"
+            contentStyle={{
+              width: 300,
+              justifyContent: "center",
+            }}
+            style={{
+              margin: 5,
+              width: 300,
+              alignItems: "center",
+              height: 40,
+              borderRadius: 15,
+            }}
+            onPress={() => setIsSingUP(true)}
+          >
+            WANT TO SING UP ?
+          </Button>
+          <Text>{message}</Text>
+        </>
+      )}
     </View>
   );
 };

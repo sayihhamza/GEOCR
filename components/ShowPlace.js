@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -15,6 +15,25 @@ export const ShowPlace = ({
   currentPosition,
   setCurrentPosition,
 }) => {
+  const showDescription = () => {
+    switch (showPlace?.type) {
+      case "Store":
+        return "Products";
+      case "Cafe":
+        return "Services";
+      case "Restaurant":
+        return "Services";
+      case "Bakery":
+        return "Breads";
+      case "Sports":
+        return "Activities";
+      case "Other":
+        return "Description";
+      default:
+        return "Description";
+    }
+  };
+
   return (
     <View
       style={{
@@ -22,7 +41,7 @@ export const ShowPlace = ({
         bottom: 100,
         backgroundColor: "black",
         borderRadius: 20,
-        height: 180,
+        height: 200,
         width: 350,
         padding: 10,
         opacity: 0.7,
@@ -91,6 +110,16 @@ export const ShowPlace = ({
         }}
       >
         {showPlace?.website}
+      </Text>
+      <Text
+        style={{
+          fontSize: 15,
+          color: "white",
+
+          fontFamily: "Times New Roman",
+        }}
+      >
+        {showDescription()}
       </Text>
       <Button
         mode="contained"

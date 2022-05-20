@@ -152,9 +152,9 @@ export const SearchPlace = ({
         placeholder="Search place"
         onChangeText={onChangeSearch}
         value={searchQuery}
-        icon={IconCamera}
+        // icon={IconCamera}
         iconColor="white"
-        onIconPress={() => setVisible(true)}
+        // onIconPress={() => setVisible(true)}
         theme={{
           dark: true,
           colors: {
@@ -173,6 +173,23 @@ export const SearchPlace = ({
           // opacity: 0.7,
         }}
       />
+      {searchQuery != "" ? (
+        <></>
+      ) : (
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: 5,
+            right: 10,
+            elevation: 5,
+            zIndex: 5,
+            opacity: 0.8,
+          }}
+          onPress={() => setVisible(true)}
+        >
+          <IconCamera />
+        </TouchableOpacity>
+      )}
       {searchQuery != "" && (searchGeocoder || places[0]) ? (
         <View
           style={{
