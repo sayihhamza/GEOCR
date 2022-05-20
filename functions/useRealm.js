@@ -124,6 +124,25 @@ const useRealm = () => {
     }
   };
 
+  const deleteplace = (place) => {
+    // const realm = realmReference.current;
+    // if (realm) {
+    //   const placesObject = realm.objects("Place");
+    //   const selectedPlace = placesObject.filtered("name == '$0'", [
+    //     "Test type",
+    //   ]);
+    //   console.log(selectedPlace);
+    //   // realm.write(() => {
+    //   //   // const selectedPlace = placesObject.filtered(
+    //   //   //   "_id == '6284f590bb5ea6a32577c9b2'"
+    //   //   // );
+    //   //   // console.log(selectedPlace);
+    //   //   // realm.delete(place);
+    //   // });
+    // }
+    // // console.log(place);
+  };
+
   const createUser = (username, email, password) => {
     const realm = realmReference.current;
     if (realm) {
@@ -157,6 +176,7 @@ const useRealm = () => {
     fetchPlaces,
     fetchUsers,
     createplace,
+    deleteplace,
     createUser,
   };
 };

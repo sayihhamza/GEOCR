@@ -825,26 +825,23 @@ const NativeMAP = () => {
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
   const [isSingUp, setIsSingUP] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("sayihhamza");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("1234567");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
   const { fetchUsers, createUser } = useRealm();
 
   // useEffect(() => {
-
-  // user.length < 5 && user.length > 0
-  //   ? setMessage("username is short")
-  //   : setMessage("");
-  // email.length < 5 && email.length > 0
-  //   ? setMessage("email is short")
-  //   : setMessage("");
-  // password.length < 5 && password.length > 0
-  //   ? setMessage("password is short")
-  //   : setMessage("");
-  // }, [email, password]);
+  //   fetchUsers()?.map((user) => {
+  //     if (username == user.username && password == user.password) {
+  //       navigation.navigate("App View");
+  //     } else {
+  //       setMessage("username or password is invalid");
+  //     }
+  //   });
+  // }, [fetchUsers]);
 
   return (
     <View

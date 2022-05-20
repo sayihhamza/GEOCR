@@ -135,10 +135,11 @@ export const ShowPlace = ({
           borderBottomRightRadius: 20,
         }}
         onPress={() => {
-          setShowPlace(null);
-          setSearchQuery("");
-          setScnnedPlace(null);
-          setCurrentPosition(userPosition);
+          // setShowPlace(null);
+          // setSearchQuery("");
+          // setScnnedPlace(null);
+          // setCurrentPosition(userPosition);
+          // deleteplace(showPlace);
         }}
       >
         <Icon name="remove" size={18} color="white" />
