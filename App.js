@@ -825,20 +825,26 @@ const NativeMAP = () => {
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
   const [isSingUp, setIsSingUP] = useState(false);
-  const [username, setUsername] = useState("sayihhamza");
-  const [email, setEmail] = useState("sayihhamza@gmail.com");
-  const [password, setPassword] = useState("Sayihhamza");
-  const [confirmPassword, setConfirmPassword] = useState("Sayihhamza");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    email.length < 5 && email.length > 0
-      ? setMessage("email is short")
-      : setMessage("");
-    password.length < 5 && password.length > 0
-      ? setMessage("password is short")
-      : setMessage("");
-  }, [email, password]);
+  const { fetchUsers, createUser } = useRealm();
+
+  // useEffect(() => {
+
+  // user.length < 5 && user.length > 0
+  //   ? setMessage("username is short")
+  //   : setMessage("");
+  // email.length < 5 && email.length > 0
+  //   ? setMessage("email is short")
+  //   : setMessage("");
+  // password.length < 5 && password.length > 0
+  //   ? setMessage("password is short")
+  //   : setMessage("");
+  // }, [email, password]);
 
   return (
     <View
@@ -876,7 +882,7 @@ const Welcome = ({ navigation }) => {
               value={username}
               placeholder="username"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -894,7 +900,7 @@ const Welcome = ({ navigation }) => {
               value={email}
               placeholder="email"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -912,7 +918,7 @@ const Welcome = ({ navigation }) => {
               value={password}
               placeholder="password"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -931,7 +937,7 @@ const Welcome = ({ navigation }) => {
               value={confirmPassword}
               placeholder="Confirm passwrod"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -948,10 +954,24 @@ const Welcome = ({ navigation }) => {
             mode="contained"
             color="white"
             onPress={() => {
-              if (email.length > 5 && password.length > 5) {
+              if (
+                username.length > 5 &&
+                password.length > 5 &&
+                email.length > 5 &&
+                password === confirmPassword
+              ) {
+                createUser(username, email, password);
                 navigation.navigate("App View");
               } else {
-                setMessage("email or password is short or invalid");
+                username.length < 5 && username.length > 0
+                  ? setMessage("username is short")
+                  : setMessage("");
+                email.length < 5 && email.length > 0
+                  ? setMessage("email is short")
+                  : setMessage("");
+                password.length < 5 && password.length > 0
+                  ? setMessage("password is short")
+                  : setMessage("");
               }
             }}
             contentStyle={{
@@ -992,11 +1012,11 @@ const Welcome = ({ navigation }) => {
         <>
           <View style={styles.inputContainer}>
             <TextInput
-              onChangeText={setEmail}
-              value={email}
-              placeholder="email"
+              onChangeText={setUsername}
+              value={username}
+              placeholder="username"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -1014,7 +1034,7 @@ const Welcome = ({ navigation }) => {
               value={password}
               placeholder="password"
               style={{
-                borderColor: "white",
+                borderColor: "grey",
                 borderWidth: 2,
                 margin: 5,
                 padding: 10,
@@ -1031,15 +1051,13 @@ const Welcome = ({ navigation }) => {
             mode="contained"
             color="white"
             onPress={() => {
-              if (
-                email.length > 5 &&
-                password.length > 5 &&
-                email.toLocaleLowerCase() == "sayihhamza@gmail.com"
-              ) {
-                navigation.navigate("App View");
-              } else {
-                setMessage("email or password is invalid or short");
-              }
+              fetchUsers()?.map((user) => {
+                if (username == user.username && password == user.password) {
+                  navigation.navigate("App View");
+                } else {
+                  setMessage("username or password is invalid");
+                }
+              });
             }}
             contentStyle={{
               width: 300,

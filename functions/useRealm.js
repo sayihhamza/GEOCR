@@ -16,6 +16,17 @@ const PlaceSchema = {
   primaryKey: "_id",
 };
 
+const UserSchema = {
+  name: "User",
+  properties: {
+    _id: "objectId",
+    username: "string",
+    email: "string",
+    password: "string",
+  },
+  primaryKey: "_id",
+};
+
 const realmApp = new Realm.App({
   id: "nativemap-doaxl",
   baseUrl: "https://realm.mongodb.com",
@@ -23,6 +34,7 @@ const realmApp = new Realm.App({
 
 const useRealm = () => {
   const realmReference = useRef(null);
+  const [users, setUsers] = useState([]);
   const [places, setPlaces] = useState([]);
   const [stores, setStores] = useState([]);
   const [cafes, setCafes] = useState([]);
@@ -36,7 +48,7 @@ const useRealm = () => {
       const creds = Realm.Credentials.emailPassword("system", "password");
       await realmApp.logIn(creds);
       const config = {
-        schema: [PlaceSchema],
+        schema: [PlaceSchema, UserSchema],
         sync: {
           user: realmApp?.currentUser,
           partitionValue: realmApp?.currentUser?.id,
@@ -48,6 +60,7 @@ const useRealm = () => {
           realmReference.current = realmInstance;
           const realm = realmReference.current;
           if (realm) {
+            setUsers(realm.objects("User"));
             setPlaces(realm.objects("Place"));
             setStores(realm.objects("Place").filtered("type == 'Store'"));
             setCafes(realm.objects("Place").filtered("type == 'Cafe'"));
@@ -74,6 +87,7 @@ const useRealm = () => {
     })();
   }, [
     realmReference,
+    setUsers,
     setPlaces,
     setStores,
     setCafes,
@@ -110,6 +124,22 @@ const useRealm = () => {
     }
   };
 
+  const createUser = (username, email, password) => {
+    const realm = realmReference.current;
+    if (realm) {
+      realm.write(() => {
+        realm.create("User", {
+          _id: new BSON.ObjectID(),
+          partition: realmApp.currentUser?.id,
+          username: username,
+          email: email,
+          password: password,
+        });
+      });
+    }
+  };
+
+  const fetchUsers = () => users;
   const fetchPlaces = () => places;
   const fetchStores = () => stores;
   const fetchCafes = () => cafes;
@@ -125,7 +155,9 @@ const useRealm = () => {
     fetchCafes,
     fetchStores,
     fetchPlaces,
+    fetchUsers,
     createplace,
+    createUser,
   };
 };
 
