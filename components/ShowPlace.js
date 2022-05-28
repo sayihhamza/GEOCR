@@ -105,7 +105,6 @@ export const ShowPlace = ({
         style={{
           fontSize: 15,
           color: "white",
-
           fontFamily: "Times New Roman",
         }}
       >
@@ -119,7 +118,9 @@ export const ShowPlace = ({
           fontFamily: "Times New Roman",
         }}
       >
-        {showDescription()}
+        {showPlace.description
+          ? `${showDescription()} : ${showPlace?.description}`
+          : null}
       </Text>
       <Button
         mode="contained"

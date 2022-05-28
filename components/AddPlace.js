@@ -34,6 +34,7 @@ export function AddPlace({
   const [placePhone, setPlacePhone] = useState("");
   const [placeEmail, setPlaceEmail] = useState("");
   const [placeWebsite, setPlaceWebsite] = useState("");
+  const [placeDescription, setPlaceDescription] = useState("");
   // const [currentLocation, setCurrentLocation] = useState([]);
   const [description, setDescription] = useState("Product type");
   const [scannedLocation, setScannedLocation] = useState(null);
@@ -66,6 +67,7 @@ export function AddPlace({
           lng: userPosition[0],
           lat: userPosition[1],
         });
+        console.log(addr);
         Object.entries(addr)[0].map((block) =>
           block.formattedAddress != undefined && block.formattedAddress != null
             ? setPlaceAddress(block.formattedAddress)
@@ -77,6 +79,7 @@ export function AddPlace({
           lat: placeLocation[1],
           lng: placeLocation[0],
         });
+        console.log(addr);
         Object.entries(addr)[0].map((block) =>
           block.formattedAddress
             ? setScannedAddress(block.formattedAddress)
@@ -132,7 +135,7 @@ export function AddPlace({
   useEffect(() => {
     (async () => {
       let loc = await Geocoder.geocodeAddress(textArray.join());
-
+      console.log(loc);
       loc.map((block) => {
         setScannedLocation([block.position.lng, block.position.lat]);
       });
@@ -298,7 +301,7 @@ export function AddPlace({
                   autoFocus={true}
                 />
                 <Input
-                  onChangeText={setDescription}
+                  onChangeText={setPlaceDescription}
                   // defaultValue={description ? description : null}
                   placeholder={description}
                   containerStyle={{ width: 350 }}
@@ -344,7 +347,8 @@ export function AddPlace({
                       placeType,
                       placePhone,
                       placeEmail,
-                      placeWebsite
+                      placeWebsite,
+                      placeDescription
                     );
                   } else {
                     createplace(
@@ -354,7 +358,8 @@ export function AddPlace({
                       placeType,
                       placePhone,
                       placeEmail,
-                      placeWebsite
+                      placeWebsite,
+                      placeDescription
                     );
                   }
                   setCurrentPosition([
@@ -368,6 +373,7 @@ export function AddPlace({
                     phoneNumber: placePhone,
                     emailAddress: placeEmail,
                     website: placeWebsite,
+                    description: placeDescription,
                   });
                   setTextArray(null);
                   setMoreInfo(false);

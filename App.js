@@ -825,9 +825,9 @@ const NativeMAP = () => {
 const Welcome = ({ navigation }) => {
   LogBox.ignoreAllLogs();
   const [isSingUp, setIsSingUP] = useState(false);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("sayihhamza");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("1234567");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 

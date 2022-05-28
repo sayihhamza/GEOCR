@@ -12,6 +12,7 @@ const PlaceSchema = {
     phoneNumber: "string?",
     emailAddress: "string?",
     website: "string?",
+    description: "string?",
   },
   primaryKey: "_id",
 };
@@ -104,7 +105,8 @@ const useRealm = () => {
     placeType,
     placePhoneNumber,
     placeEmailAddress,
-    placeWebsite
+    placeWebsite,
+    placeDescription
   ) => {
     const realm = realmReference.current;
     if (realm) {
@@ -119,6 +121,7 @@ const useRealm = () => {
           phoneNumber: placePhoneNumber,
           emailAddress: placeEmailAddress,
           website: placeWebsite,
+          description: placeDescription,
         });
       });
     }

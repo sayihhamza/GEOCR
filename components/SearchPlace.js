@@ -111,6 +111,7 @@ export const SearchPlace = ({
   useEffect(() => {
     (async () => {
       let loc = await Geocoder.geocodeAddress(textArray.join());
+      console.log(loc);
       loc.map((block) => {
         // console.log(block);
         setScnnedPlace({
