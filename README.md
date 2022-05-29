@@ -1,6 +1,6 @@
 # GEOCR
 
-<h2>A Responsive sorting application for visualizing various sorting algorithms created using React library.</h2>
+<h2>A React Native application that integrates an ocr to scan panels and business cards and search/add them to a custom map ( Geocoder + MongoDB Database ).</h2>
 
 <p float="left">
  <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/SCREEN1.jpg" alt="Databay showcase gif" title="Databay showcase gif" width="190"
