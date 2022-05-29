@@ -5,16 +5,16 @@
 <p float="left">
  <div style="margin: 20px;"> 
       <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="400"align="left" style="margin: 20px;"/>
+     height="400"align="left" style="margin: 10px;"/>
 </div>
  <div style="margin: 20px;"> 
  <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="400"align="center" style="margin: 20px;"/>
+     height="400"align="center" style="margin: 10px;"/>
   </div>
 
  <div style="margin: 20px;"> 
      <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="400"align="right" style="margin: 20px;"/>
+     height="400"align="right" style="margin: 10px;"/>
  </div>
 
 </p>
