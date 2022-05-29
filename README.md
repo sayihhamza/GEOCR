@@ -4,15 +4,15 @@
 
 <p float="left">
 <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="390"align="left"/>
+     height="400"align="left" style="margin: 20px;"/>
 <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="390"align="center"/>
+     height="400"align="center" style="margin: 20px;"/>
 <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="390"align="right"/>
+     height="400"align="right" style="margin: 20px;"/>
 </p>
 <!-- <img src="https://github.com/sayihhamza/SortingVisualizer/blob/main/MobileVersion.gif" alt="Databay showcase gif" title="Databay showcase gif" width="190"
      height="350"align="right"/> -->
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+<!-- <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> -->
      <h3>This repo is an attempt to help in learning popular sorting algorithms by visualization</h3>
 Helps to
 
