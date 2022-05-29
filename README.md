@@ -5,7 +5,7 @@
 <p float="left">
  <span style="margin-right: 20px;"> 
       <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="400"align="left" style="margin: 20px;"/>
+     height="400"align="left" style="margin: 200px;"/>
 </span>
  <span style="margin: 20px;"> 
  <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
