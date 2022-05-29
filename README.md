@@ -3,22 +3,22 @@
 <h2>A React Native application that integrates an ocr to scan panels and business cards and search/add them to a custom map ( Geocoder + MongoDB Database ).</h2>
 
 <p float="left">
- <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/SCREEN1.jpg" alt="Databay showcase gif" title="Databay showcase gif" width="180"
-     height="400"align="left"/>
- <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/SCREEN2.jpg" alt="Databay showcase gif" title="Databay showcase gif"width="180"
-     height="400"align="left"/>
+ <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/SCREEN1.jpg" alt="Databay showcase gif" title="Databay showcase gif" width="160"
+     height="370"align="left"/>
+ <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/SCREEN2.jpg" alt="Databay showcase gif" title="Databay showcase gif"width="160"
+     height="370"align="left"/>
  <span style="margin-right: 20px;"> 
-      <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="180"
-     height="400"align="right" style="margin: 20px;"/>
+      <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="160"
+     height="370"align="right" style="margin: 20px;"/>
 </span>
  <span style="margin: 20px;"> 
- <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="180"
-     height="400"align="right" style="margin: 20px;"/>
+ <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="160"
+     height="370"align="right" style="margin: 20px;"/>
   </span>
 
  <span style="margin: 20px;"> 
-     <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="180"
-     height="400"align="right" style="margin: 20px;"/>
+     <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="160"
+     height="370"align="right" style="margin: 20px;"/>
  </span>
 
 </p>
