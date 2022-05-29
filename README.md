@@ -1,7 +1,8 @@
 # GEOCR
 
 <h2>A Responsive sorting application for visualizing various sorting algorithms created using React library.</h2>
-<video src='https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.mp4' width=180/>
+<img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="150"
+     height="300"align="right"/>
 <!-- <img src="https://github.com/sayihhamza/SortingVisualizer/blob/main/MobileVersion.gif" alt="Databay showcase gif" title="Databay showcase gif" width="190"
      height="350"align="right"/> -->
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
