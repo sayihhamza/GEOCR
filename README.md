@@ -3,12 +3,20 @@
 <h2>A Responsive sorting application for visualizing various sorting algorithms created using React library.</h2>
 
 <p float="left">
-<img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
-     height="400"align="left" style="margin-right: 20px;"/>
-<img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
+ <div style="margin: 20px;"> 
+      <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO1.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
+     height="400"align="left" style="margin: 20px;"/>
+</div>
+ <div style="margin: 20px;"> 
+ <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO2.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
      height="400"align="center" style="margin: 20px;"/>
-<img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
+  </div>
+
+ <div style="margin: 20px;"> 
+     <img src="https://github.com/sayihhamza/GEOCR/blob/main/assets/VIDEO3.gif" alt="Databay showcase gif" title="Databay showcase gif" width="200"
      height="400"align="right" style="margin: 20px;"/>
+ </div>
+
 </p>
 <!-- <img src="https://github.com/sayihhamza/SortingVisualizer/blob/main/MobileVersion.gif" alt="Databay showcase gif" title="Databay showcase gif" width="190"
      height="350"align="right"/> -->
