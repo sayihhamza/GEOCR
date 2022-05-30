@@ -25,37 +25,24 @@
 <!-- <img src="https://github.com/sayihhamza/SortingVisualizer/blob/main/MobileVersion.gif" alt="Databay showcase gif" title="Databay showcase gif" width="190"
      height="350"align="right"/> -->
 <!-- <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> -->
-     <h3>This repo is an attempt to help in learning popular sorting algorithms by visualization</h3>
-Helps to
-
-- understand the working of sorting algorithm
-- check total swaps required
-- check total comparisions
-- compare algorithms side by side
-- know the time taken (time is just an approximate unit for comparision)
-
+     <h3>React Native application that integrates a Map with an OCR ( MapBox SDK with ML Kit SDK ) as well as NoSQL Database ( MongoDB ).</h3>
 Features
 
-- Sort any given array of 2 digits positive integers
-- Alter the speed of execution
-- Start, pause and reset the execution
-- Generate random array of numbers of sorting
+- Navigate through map provided by Mapbox.
+- Search places wether from the Geocoder or the app's database.
+- Add places by simply taking picture of place's panel or its bussiness card.
+- Basic map functionalities such as viewing directions to a selected place ...
 
 ### Technologies
 
-- React with hooks
-- Typescript
-- [Styled components](https://styled-components.com/) + [React material](https://material-ui.com/) (css and component libraries)
-- [Zustand](https://github.com/pmndrs/zustand) (hooks based state management library)
-
-### Features built using
-
-- Animations are done using [FLIP principle](https://aerotwist.com/blog/flip-your-animations/)
-- Flex is used for array display and manipulation of positions (flex order property)
-- JavaScript async generators are used heavily for the controlled execution of algorithms
+- React with hooks 
+- React Native
+- MapBox
+- ML Kit
+- MongoDB/Realm
 
 ### Run in your local
 
-- `git clone https://github.com/sayihhamza/SortingVisualizer.git`
-- `npm install` (after navigating inside the directory)
-- `npm start`
+- `git clone https://github.com/sayihhamza/GEOCR.git`
+- `yarn` (after navigating inside the directory)
+- `yarn start`
