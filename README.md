@@ -26,7 +26,7 @@
      height="350"align="right"/> -->
 <!-- <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> -->
      <h3>React Native application that integrates a Map with an OCR ( MapBox SDK with ML Kit SDK ) as well as NoSQL Database ( MongoDB ).</h3>
-Features
+### Features
 
 - Navigate through map provided by Mapbox.
 - Search places wether from the Geocoder or the app's database.
