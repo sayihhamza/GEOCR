@@ -24,7 +24,7 @@
 </p>
 <!-- <img src="https://github.com/sayihhamza/SortingVisualizer/blob/main/MobileVersion.gif" alt="Databay showcase gif" title="Databay showcase gif" width="190"
      height="350"align="right"/> -->
-<!-- <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /> -->
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
      <h3>React Native application that integrates a Map with an OCR ( MapBox SDK with ML Kit SDK ) as well as NoSQL Database ( MongoDB ).</h3>
      
 ### Features
